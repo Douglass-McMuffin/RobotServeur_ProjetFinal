@@ -8,7 +8,7 @@ Dans Alignement :
 Une fonction qui regarder les trois capteurs sont sur du noir.
     Cette fonction
 
-
+ALOHA
 POUR LE MOUVEMENT DU DÉPART AU CLIENT
 
 On suppose qu'on sait c'est quel client (le deuxième)
