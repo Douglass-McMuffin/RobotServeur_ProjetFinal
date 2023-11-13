@@ -4,6 +4,7 @@
 #include "suiveurDeLigne.h"
 
 
+
 // Il faut un code pour le déplacement avec le suiveur de ligne
 /*
 
@@ -20,14 +21,7 @@ On suppose qu'on sait qu'on est au départ
 Tant qu'il n'est pas au client
 
 */
-
-void setup() {
-  BoardInit();
-  Serial.begin(9600); 
-  MOTOR_SetSpeed(0, 0.5);
-  MOTOR_SetSpeed(1, 0.5);
-
-  //variables pour fonction indication_direction
+ //variables pour fonction indication_direction
 
   char intersection;
   char trajet[10];
@@ -44,11 +38,18 @@ void setup() {
   float vitesse = 0.5;/*vitesse desire lors des deplacements*/
   //chemin //definir structure
 
+void setup() {
+  BoardInit();
+  Serial.begin(9600); 
+  MOTOR_SetSpeed(0, vitesse);
+  MOTOR_SetSpeed(1, vitesse);
+
 }
 int flag = 0;
 
 void loop() {
-  lireLumiere(&luxGauche,&luxCentre,&luxDroite);
+
+  LireLumiere(&luxGauche,&luxCentre,&luxDroite);
   if (luxGauche == 1 && luxCentre == 1 && luxDroite == 1){
     
      indication_direction(/*envoie de la bonne "structure"*/,trajet,intersection_actuelle);

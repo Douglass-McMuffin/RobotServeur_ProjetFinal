@@ -1,4 +1,5 @@
-#ifndef suiveurDeLigne
+#ifndef suiveurDeLigne_h
+#define suiveurDeLigne_h
 
 #include <arduino.h>
 
