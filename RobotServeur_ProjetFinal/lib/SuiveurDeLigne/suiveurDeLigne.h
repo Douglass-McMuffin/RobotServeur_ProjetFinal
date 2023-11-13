@@ -8,7 +8,7 @@
 #define PIN_LUMIERE_CENTRE
 #define PIN_LUMIERE_DROITE
 
-#define NOMBRE_DE_SOMMET
+#define NOMBRE_DE_SOMMET 6
 
 struct Sommet {
     char nom;

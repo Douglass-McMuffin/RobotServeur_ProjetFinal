@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <LibRobus.h>
+#include "suiveurDeLigne.h"
 
 // Il faut un code pour le déplacement avec le suiveur de ligne
 /*
@@ -21,8 +22,18 @@ Tant qu'il n'est pas au client
 void setup() {
   // put your setup code here, to run once:
   BoardInit();
-  //BONJOUURRRRR
+  Serial.begin(9600);
+  struct Sommet graphe[NOMBRE_DE_SOMMET];
+  char chemin[NOMBRE_DE_SOMMET];
+  InitaliserGraphe(&graphe);
+  Chemin(&graphe, '1', '3', chemin);
+  Serial.print(chemin);
+
+
+  initaliserGraphe()
+
 }
+
 
 void loop() {
   // put your main code here, to run repeatedly:

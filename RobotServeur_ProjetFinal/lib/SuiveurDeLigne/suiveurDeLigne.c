@@ -128,40 +128,41 @@ void Chemin (struct Sommet *graphe, char debut, char fin, char *chemin)
     }
 }
 
-void LireGraphe (char *nomFichier, struct Sommet *graphe)
+void InitialiserGraphe (struct Sommet *graphe)
 {
-    FILE *fp;
-    if ((fp = fopen(nomFichier, "r")) == NULL)
-    {
-        char c = getc(fp);
-        struct Sommet *index0;
-        struct Sommet sommetActuel;
-        index0 = graphe;
-        while (c != '\n') // Créer tous les sommets
+    char sommets[] = 
+"ABC123
+A : 1B
+B : A2C
+C : 3B
+1 : A
+2 : B
+3 : C";
+    int i = 0;
+    struct Sommet *index0;
+    struct Sommet sommetActuel;
+    index0 = graphe;
+    while (sommets[i] != '\n') // Créer tous les sommets
         {
-            graphe -> nom = getc(fp);
-            c = getc(fp);
+            graphe -> nom = sommets[i];
+            i++;
             graphe++;
         }
+        i++;
         do { // Ajouter les voisins
-            AppelElement(graphe, getc(fp), &sommetActuel);
-            getc(fp);getc(fp);getc(fp); // Skip les 3 autres caractères
+            AppelElement(graphe, sommets[i], &sommetActuel);
+            i += 4; // Skip les 3 autres caractères
             int nombre_voisin = 0;
-            while (c != '\n')
+            while (sommets[i] != '\n')
             {
-                AppelElement(graphe, getc(fp), &(index0 -> voisin[nombre_voisin])); // Enregistre le voisin
-                c = getc(fp);
+                AppelElement(graphe, sommets[i], &(index0 -> voisin[nombre_voisin])); // Enregistre le voisin
+                i++;
                 nombre_voisin++;
             }
             index0 -> nb_voisin = nombre_voisin;
             index0++;
 
         } while (index0 != graphe)
-        fclose(fp);
-    }
-    else 
-    {
-        //ERREUR LORS DE L'OUVERTURE DU FICHIER
-        return;
-    }
+
+    return;
 }
