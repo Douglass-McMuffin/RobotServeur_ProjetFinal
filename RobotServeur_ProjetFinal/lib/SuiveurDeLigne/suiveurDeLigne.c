@@ -1,24 +1,23 @@
 #include "suiveurDeLigne.h"
 #include <Arduino.h>
-#include <stdio.h>
 
 // La fonction devra modifier la vitesse des roues selon les capteurs
 
 //À mettre dans le fichier .h (en bas)
-float vGauche, vDroite;
+/* float vGauche, vDroite;
 float *p_vGauche, *p_vDroite;
 p_vGauche = &vGauche;
-p_vDroite = &vDroite;
-int eGauche, eDroite;
+p_vDroite = &vDroite; 
+int eGauche, eDroite; */
 
 // Inscrit les valeurs des capteurs dans les bools.
 // La fonction prend 3 pointeurs pour les 3 capteurs.
 // La fonction ne retourne rien. Les variables deviennent soit 0 pour quand il voit du noir et 1 pour quand il voit du blanc
 void LireLumiere (bool *p_luxGauche, bool *p_luxCentre, bool *p_luxDroite)
 {
-    *p_luxGauche = !digitalRead(PIN_LUMIERE_GAUCHE);
-    *p_luxCentre = !digitalRead(PIN_LUMIERE_CENTRE);
-    *p_luxDroite = !digitalRead(PIN_LUMIERE_DROITE);
+    *p_luxGauche = analogRead(PIN_LUMIERE_GAUCHE) < 512;
+    *p_luxCentre = analogRead(PIN_LUMIERE_CENTRE) < 512;
+    *p_luxDroite = analogRead(PIN_LUMIERE_DROITE) < 512;
     return;
 }
 
@@ -70,7 +69,7 @@ bool Dedans (struct File file, struct Sommet element)
 {
     for (int i = file.debut; i <= file.fin; i++)
     {
-        if (element == file.sommets[i])
+        if (element.nom == file.sommets[i].nom)
             return true;
     }
     return false;
@@ -85,9 +84,19 @@ void AppelElement (struct Sommet *graphe, char nom, struct Sommet *p_sommet)
     *p_sommet = *index;
 }
 
+void AppelPointeur (struct Sommet *graphe, char nom, struct Sommet **p_sommet)
+{
+    struct Sommet *index;
+    index = graphe;
+    while (index -> nom != nom)
+        index++;
+    *p_sommet = index;
+}
+
 void Chemin (struct Sommet *graphe, char debut, char fin, char *chemin)
 {
     struct File file;
+    file.debut = 0; file.fin = 0;
     struct Sommet sommetActuel;
 
     AppelElement(graphe, debut, &sommetActuel);
@@ -110,7 +119,7 @@ void Chemin (struct Sommet *graphe, char debut, char fin, char *chemin)
                         cheminPred[i] = voisin.nom;
                         voisin = *voisin.predecesseur;
                         i++;
-                    } while (voisin.nom != debut)
+                    } while (voisin.nom != debut);
                     cheminPred[i] = debut;
                     for (int j = 0; j <= i; j++)
                     {
@@ -130,14 +139,7 @@ void Chemin (struct Sommet *graphe, char debut, char fin, char *chemin)
 
 void InitialiserGraphe (struct Sommet *graphe)
 {
-    char sommets[] = 
-"ABC123
-A : 1B
-B : A2C
-C : 3B
-1 : A
-2 : B
-3 : C";
+    char sommets[] = "ABC123\nA : 1B\nB : A2C\nC : 3B\n1 : A\n2 : B\n3 : C";
     int i = 0;
     struct Sommet *index0;
     struct Sommet sommetActuel;
@@ -148,21 +150,23 @@ C : 3B
             i++;
             graphe++;
         }
-        i++;
-        do { // Ajouter les voisins
-            AppelElement(graphe, sommets[i], &sommetActuel);
-            i += 4; // Skip les 3 autres caractères
-            int nombre_voisin = 0;
-            while (sommets[i] != '\n')
-            {
-                AppelElement(graphe, sommets[i], &(index0 -> voisin[nombre_voisin])); // Enregistre le voisin
-                i++;
-                nombre_voisin++;
-            }
-            index0 -> nb_voisin = nombre_voisin;
-            index0++;
+    i++;
+    do { // Ajouter les voisins
+        AppelElement(graphe, sommets[i], &sommetActuel);
+        i += 4; // Skip les 3 autres caractères
+        int nombre_voisin = 0;
+        while (sommets[i] != '\n')
+        {
+            AppelPointeur(graphe, sommets[i], &(sommetActuel.voisin[nombre_voisin])); // Enregistre le voisin
+            i++;
+            nombre_voisin++;
+        }
+        index0 -> nb_voisin = nombre_voisin;
+        index0 -> marque = false;
+        index0++;
 
-        } while (index0 != graphe)
+    } while (index0 != graphe);
 
     return;
 }
+
