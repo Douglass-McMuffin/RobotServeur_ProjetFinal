@@ -21,7 +21,7 @@ void loop() {
   
   LireLumiere ()//modifie valeur dans les adresses des capteurs associes(0 ou 1)
   //ajouter condition si trois capteurs == 1{\
-    //incrementer ou decrinmenter le positionnement selon les intersections vues par les capteurs(valeur precedante?)
+    //incrementer ou decrinmenter le positionnement selon les intersections vues par les capteurs(valeur precedante?)*********
         /*fonction:indications(struct chemin(on lui transmet), identifiant "choisi" (on lui transmet), intersection (on lui transmet) )
              1. Acceder a la bonne structure en verifiant le membre "identifiant" de la structure (ex: chemin[i].identifiant == '0ABC1')
                 1.1 conserver la valeur de i (la structure)
@@ -30,7 +30,7 @@ void loop() {
         //}*/
 
 
-void indication_direction (struct chemin[],char trajet[], char intersection_actuelle ){
+void indication_direction (struct chemin trajet1[],char trajet[], char intersection_actuelle ){
     int i = 0;
 
 //1. Acceder a la bonne structure en verifiant le membre "identifiant" de la structure (ex: chemin[i].identifiant == '0ABC1')
@@ -42,15 +42,18 @@ void indication_direction (struct chemin[],char trajet[], char intersection_actu
     if (intersection_actuelle == 'A')
     {
         //fonction:deplacement_intersection(chemin[i].A)**mouvement intersection, tout droit;
+        deplacement_intersection(trajet1[i].A);
     }
 
     if (intersection_actuelle == 'B')
     {
         //fonction:deplacement_intersection(chemin[i].B);
+        deplacement_intersection(chemin[i].B);
     }
 
     if (intersection_actuelle == 'C'){
         //fonction:deplacement_intersection(chemin[i].C);
+        deplacement_intersection(chemin[i].C)
     }
 
 }

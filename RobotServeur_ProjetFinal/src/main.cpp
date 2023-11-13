@@ -1,5 +1,8 @@
 #include <Arduino.h>
 #include <LibRobus.h>
+#include "commande_direction.h"
+#include "suiveurDeLigne.h"
+
 
 // Il faut un code pour le déplacement avec le suiveur de ligne
 /*
@@ -19,12 +22,39 @@ Tant qu'il n'est pas au client
 */
 
 void setup() {
-  // put your setup code here, to run once:
   BoardInit();
-  //BONJOUURRRRR
+  Serial.begin(9600); 
+  MOTOR_SetSpeed(0, 0.5);
+  MOTOR_SetSpeed(1, 0.5);
+
+  //variables pour fonction indication_direction
+
+  char intersection;
+  char trajet[10];
+  char intersection_actuelle;
+
+  //variables pour fonction lireLumiere
+  bool luxGauche; 
+  bool luxCentre;
+  bool luxDroite;
+
+  //variables pour fonction ControleMoteurLigne
+  float vGauche;
+  float vDroite;
+  float vitesse = 0.5;/*vitesse desire lors des deplacements*/
+  //chemin //definir structure
+
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  lireLumiere(&luxGauche,&luxCentre,&luxDroite);
+  if (luxGauche == 1 && luxCentre == 1 && luxDroite == 1){
+    
+     indication_direction(/*envoie de la bonne "structure"*/,trajet,intersection_actuelle);
+  }
+  ControleMoteurLigne(vitesse,&p_vGauche,&vDroite,luxGauche,luxCentre,luxDroite);
+  MOTOR_SetSpeed(0, vGauche);
+  MOTOR_SetSpeed(1, vDroite);
+
 }
 

@@ -4,17 +4,26 @@
 #include <stdio.h>
 #include <libRobus.h>
 #include <arduino.h> // necessaire?
+#define LEFT 0
+#define STRAIGHT 1
+#define RIGHT 2
+
+
 /**
- * @par identifiant The action parameter represents the movement we want to give to the robot
- * @param identifiant chemin, premiere lettre reprsente le depart, la derniere lettre la fin
  * 
+ * @param identifiant chemin, premiere lettre represente le depart, la derniere lettre la fin
+ * @param membres chaque intersection contenant les valeurs suivantes: 0 = left ; 1 = straight ; 2 = right.
 */
 struct chemin{
-char identifiant[6];//chemin pour se rendre d'un point 1 a 2
-//donner instruction pour chaque intersection(0 = left ; 1 = straight ; 2 = right.)
+char identifiant[6];
 int A;
 int B;
 int C;
 };
 
+struct chemin trajet1 = {"0AB2",STRAIGHT,LEFT};
+
+}
+
+void indication_direction (struct chemin[],char trajet[], char intersection_actuelle );
 #endif

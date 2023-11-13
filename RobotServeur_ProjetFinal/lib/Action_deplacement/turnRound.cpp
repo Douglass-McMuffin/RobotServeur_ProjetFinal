@@ -158,17 +158,16 @@ void turnLeft(double angle, double maxSpeed)
 void deplacement_intersection(int action)
 {
     if (action == 0){
-
-
+        turnLeft(90,0.5);
     }
+
     if (action == 1){
-
-
+        delay(100);
     }
 
     if (action == 2){
-
+        turnRight(90,0.5);
 
     }
-
+    
 }
