@@ -1,39 +1,34 @@
-#ifndef suiveurDeLigne
+#ifndef suiveurDeLigne_h
+#define suiveurDeLigne_h
 
 #include <arduino.h>
 
 
-#define PIN_LUMIERE_GAUCHE 50
-#define PIN_LUMIERE_CENTRE 51
-#define PIN_LUMIERE_DROITE 52
+#define PIN_LUMIERE_GAUCHE 50 //À changer dans le futur
+#define PIN_LUMIERE_CENTRE 51 //même chose
+#define PIN_LUMIERE_DROITE 52 //même chose
 
-#define NOMBRE_DE_SOMMET 6
-
-#define LEFT 0
-#define STRAIGHT 1
-#define RIGHT 2
+#define NOMBRE_DE_SOMMET 6 // À mettre à jour plus tard
 
 
 struct Sommet {
-    char nom;
-    struct Sommet *voisin[NOMBRE_DE_SOMMET - 1];
+    char nom; // Identifiant
+    struct Sommet *voisin[NOMBRE_DE_SOMMET - 1]; // Les voisins immédiat du sommet
     int nb_voisin;
-    struct Sommet *predecesseur;
-    bool marque;
+    struct Sommet *predecesseur; // Pointe vers le sommet qui s'y rend
+    bool marque; // la marque détermine si le sommet a déjà été vu.
 };
 
 struct File {
-    struct Sommet sommets[NOMBRE_DE_SOMMET];
-    int debut;
-    int fin;
+    struct Sommet sommets[NOMBRE_DE_SOMMET]; // Une file qui contient les sommets dans l'ordre de découverte
+    int debut; // index du début
+    int fin; // index de fin
 };
 
-struct Mouv {
-    char nom[4];
-    int mouvement;
-};
-
+// LireLumiere permet de modifier les bool des trois capteurs de lumière
+// *p_luxGauche = adresse du bool pour Gauche et ainsi de suite
 void LireLumiere (bool *p_luxGauche, bool *p_luxCentre, bool *p_luxDroite);
+// ControleMoteurLigne change la vitesse selon la situation
 void ControleMoteurLigne (float vitesse, float *p_vGauche, float *p_vDroite, bool luxGauche, bool luxCentre, bool luxDroite);
 void Enfile (struct File file, struct Sommet element);
 void Defile (struct File file, struct Sommet *element);

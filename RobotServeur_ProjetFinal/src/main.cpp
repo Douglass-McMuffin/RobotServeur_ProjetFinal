@@ -26,29 +26,37 @@ void setup() {
   Serial.begin(9600); 
   MOTOR_SetSpeed(0, 0.5);
   MOTOR_SetSpeed(1, 0.5);
-
-  //variables pour fonction indication_direction
-
-  char intersection;
-  char trajet[10];
-  char intersection_actuelle;
-
-  //variables pour fonction lireLumiere
-  bool luxGauche; 
-  bool luxCentre;
-  bool luxDroite;
-
-  //variables pour fonction ControleMoteurLigne
-  float vGauche;
-  float vDroite;
-  float vitesse = 0.5;/*vitesse desire lors des deplacements*/
-  //chemin //definir structure
+  
+  
 
 }
 int flag = 0;
-
+//***idee personelle du deplacment du robot***//
+/*
 void loop() {
-  lireLumiere(&luxGauche,&luxCentre,&luxDroite);
+  //se rendre au client
+  //+fonction verifier activation de bouton et sauvegarder en memoire ordre
+  
+  LireLumiere ()//modifie valeur dans les adresses des capteurs associes(0 ou 1)
+  //ajouter condition si trois capteurs == 1{\
+    //incrementer ou decrinmenter le positionnement selon les intersections vues par les capteurs(valeur precedante?)*********
+        /*fonction:indications(struct chemin(on lui transmet), identifiant "choisi" (on lui transmet), intersection (on lui transmet) )
+             1. Acceder a la bonne structure en verifiant le membre "identifiant" de la structure (ex: chemin[i].identifiant == '0ABC1')
+                1.1 conserver la valeur de i (la structure)
+             2. selon l'intersection, voir la directive associe (if intersection == A, check le membre A et faire l'action)
+                  
+        //}*/
+void loop() {
+  // On lit les lumières
+  LireLumiere(&luxGauche,&luxCentre,&luxDroite);
+
+  // On vérifie les boutons
+  // SI on doit être quelque part (position actuelle != position désirée)
+    // On se change les vitesse pour se rendre à la position désirée
+    // SI on est à une intersection
+      // 
+  // SINON
+    // On est arrêté
   if (luxGauche == 1 && luxCentre == 1 && luxDroite == 1){
     
      indication_direction(/*envoie de la bonne "structure"*/,trajet,intersection_actuelle);
