@@ -45,6 +45,7 @@ void setup() {
   //chemin //definir structure
 
 }
+int flag = 0;
 
 void loop() {
   lireLumiere(&luxGauche,&luxCentre,&luxDroite);
@@ -56,5 +57,14 @@ void loop() {
   MOTOR_SetSpeed(0, vGauche);
   MOTOR_SetSpeed(1, vDroite);
 
+  if (flag == 0)
+  {
+    struct Sommet graphe[NOMBRE_DE_SOMMET];
+    char chemin[NOMBRE_DE_SOMMET];
+    //InitialiserGraphe(graphe);
+    //Chemin(graphe, '1', '3', chemin);
+    //Serial.print(chemin);
+    flag++;
+  } 
 }
 
