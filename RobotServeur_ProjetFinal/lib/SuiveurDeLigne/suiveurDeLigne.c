@@ -1,27 +1,27 @@
 #include "suiveurDeLigne.h"
-#include <Arduino.h>
 
-// La fonction devra modifier la vitesse des roues selon les capteurs
-
-//À mettre dans le fichier .h (en bas)
-/* float vGauche, vDroite;
-float *p_vGauche, *p_vDroite;
-p_vGauche = &vGauche;
-p_vDroite = &vDroite; 
-int eGauche, eDroite; */
 
 // Inscrit les valeurs des capteurs dans les bools.
 // La fonction prend 3 pointeurs pour les 3 capteurs.
 // La fonction ne retourne rien. Les variables deviennent soit 0 pour quand il voit du noir et 1 pour quand il voit du blanc
-void LireLumiere (bool *p_luxGauche, bool *p_luxCentre, bool *p_luxDroite)
+void LireLumiere (int *p_luxGauche, int *p_luxCentre, int *p_luxDroite)
 {
-    *p_luxGauche = analogRead(PIN_LUMIERE_GAUCHE) < 512;
-    *p_luxCentre = analogRead(PIN_LUMIERE_CENTRE) < 512;
-    *p_luxDroite = analogRead(PIN_LUMIERE_DROITE) < 512;
+    if (analogRead(PIN_LUMIERE_GAUCHE) < 512)
+        *p_luxGauche = 1;
+    else
+        *p_luxGauche = 0;
+    if (analogRead(PIN_LUMIERE_CENTRE) < 512)
+        *p_luxCentre = 1;
+    else
+        *p_luxCentre = 0;
+    if (analogRead(PIN_LUMIERE_DROITE) < 512)
+        *p_luxDroite = 1;
+    else
+        *p_luxDroite = 0;
     return;
 }
 
-void ControleMoteurLigne (float vitesse, float *p_vGauche, float *p_vDroite, bool luxGauche, bool luxCentre, bool luxDroite)
+void ControleMoteurLigne (float vitesse, float *p_vGauche, float *p_vDroite, int luxGauche, int luxCentre, int luxDroite)
 {
     // Si le robot est sur la ligne noir (centre activé)
     if (luxGauche)
@@ -65,14 +65,14 @@ void Defile (struct File file, struct Sommet *element)
     }
 }
 
-bool Dedans (struct File file, struct Sommet element)
+int Dedans (struct File file, struct Sommet element)
 {
     for (int i = file.debut; i <= file.fin; i++)
     {
         if (element.nom == file.sommets[i].nom)
-            return true;
+            return 1;
     }
-    return false;
+    return 0;
 }
 
 void AppelElement (struct Sommet *graphe, char nom, struct Sommet *p_sommet)
@@ -101,14 +101,14 @@ void Chemin (struct Sommet *graphe, char debut, char fin, char *chemin)
 
     AppelElement(graphe, debut, &sommetActuel);
     Enfile (file, sommetActuel);
-    sommetActuel.marque = true;
+    sommetActuel.marque = 1;
     while (file.debut <= file.fin)
     {
         Defile(file, &sommetActuel);
         for (int i = 0; i < sommetActuel.nb_voisin; i++)
         {
             struct Sommet voisin = *(sommetActuel.voisin[i]);
-            if (voisin.marque == false)
+            if (voisin.marque == 0)
             {
                 if (voisin.nom == fin)
                 {
@@ -131,42 +131,11 @@ void Chemin (struct Sommet *graphe, char debut, char fin, char *chemin)
                 }
                 voisin.predecesseur = &sommetActuel;
                 Enfile(file, voisin);
-                voisin.marque = true;
+                voisin.marque = 1;
             }
         }
     }
 }
 
-void InitialiserGraphe (struct Sommet *graphe)
-{
-    char sommets[] = "ABC123\nA : 1B\nB : A2C\nC : 3B\n1 : A\n2 : B\n3 : C";
-    int i = 0;
-    struct Sommet *index0;
-    struct Sommet sommetActuel;
-    index0 = graphe;
-    while (sommets[i] != '\n') // Créer tous les sommets
-        {
-            graphe -> nom = sommets[i];
-            i++;
-            graphe++;
-        }
-    i++;
-    do { // Ajouter les voisins
-        AppelElement(graphe, sommets[i], &sommetActuel);
-        i += 4; // Skip les 3 autres caractères
-        int nombre_voisin = 0;
-        while (sommets[i] != '\n')
-        {
-            AppelPointeur(graphe, sommets[i], &(sommetActuel.voisin[nombre_voisin])); // Enregistre le voisin
-            i++;
-            nombre_voisin++;
-        }
-        index0 -> nb_voisin = nombre_voisin;
-        index0 -> marque = false;
-        index0++;
 
-    } while (index0 != graphe);
-
-    return;
-}
 

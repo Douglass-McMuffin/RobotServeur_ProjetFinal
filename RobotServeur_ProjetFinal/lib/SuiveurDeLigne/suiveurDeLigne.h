@@ -27,14 +27,14 @@ struct File {
 
 // LireLumiere permet de modifier les bool des trois capteurs de lumière
 // *p_luxGauche = adresse du bool pour Gauche et ainsi de suite
-void LireLumiere (bool *p_luxGauche, bool *p_luxCentre, bool *p_luxDroite);
+void LireLumiere (int *p_luxGauche, int *p_luxCentre, int *p_luxDroite);
 // ControleMoteurLigne change la vitesse selon la situation
-void ControleMoteurLigne (float vitesse, float *p_vGauche, float *p_vDroite, bool luxGauche, bool luxCentre, bool luxDroite);
+void ControleMoteurLigne (float vitesse, float *p_vGauche, float *p_vDroite, int luxGauche, int luxCentre, int luxDroite);
 void Enfile (struct File file, struct Sommet element);
 void Defile (struct File file, struct Sommet *element);
-bool Dedans (struct File file, struct Sommet element);
+int Dedans (struct File file, struct Sommet element);
 void AppelElement (struct Sommet *graphe, char nom, struct Sommet *p_sommet);
 void Chemin (struct Sommet *graphe, char debut, char fin, char *chemin);
-void InitialiserGraphe (struct Sommet *graphe);
+void AppelPointeur (struct Sommet *graphe, char nom, struct Sommet **p_sommet);
 
 #endif
