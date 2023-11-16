@@ -25,10 +25,7 @@ struct File {
     int fin; // index de fin
 };
 
-// LireLumiere permet de modifier les bool des trois capteurs de lumière
-// *p_luxGauche = adresse du bool pour Gauche et ainsi de suite
 void LireLumiere (int *p_luxGauche, int *p_luxCentre, int *p_luxDroite);
-// ControleMoteurLigne change la vitesse selon la situation
 void ControleMoteurLigne (float vitesse, float *p_vGauche, float *p_vDroite, int luxGauche, int luxCentre, int luxDroite);
 void Enfile (struct File file, struct Sommet element);
 void Defile (struct File file, struct Sommet *element);

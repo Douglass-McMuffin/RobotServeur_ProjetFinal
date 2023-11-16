@@ -2,6 +2,7 @@
 #include "suiveurDeLigne.h"
 
 
+//Permet d'initialiser les variables pour le graphe
 void InitialiserGraphe (struct Sommet *graphe)
 {
     char sommets[] = "ABC123\nA : 1B\nB : A2C\nC : 3B\n1 : A\n2 : B\n3 : C";
