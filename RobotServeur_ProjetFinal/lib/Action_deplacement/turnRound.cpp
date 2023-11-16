@@ -8,6 +8,7 @@ Description:    Allows Robus to turn with acceleration                          
 ************************************************************************************************/
 #include "TurnRound.h"
 #include "forward.h"
+#include "commande_direction.h"
 /**
  * The function "turnSquare" makes the robot go a certain distance after rotating 45 degrees and the rotates again to be straight.
  * 
@@ -157,15 +158,15 @@ void turnLeft(double angle, double maxSpeed)
 */
 void deplacement_intersection(int action)
 {
-    if (action == 0){
+    if (action == LEFT){
         turnLeft(90,0.5);
     }
 
-    if (action == 1){
+    if (action == STRAIGHT){
         delay(100);
     }
 
-    if (action == 2){
+    if (action == RIGHT){
         turnRight(90,0.5);
 
     }

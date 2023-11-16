@@ -29,31 +29,27 @@ void loop() {
                   
         //}*/
 
-
-void indication_direction (struct chemin trajet1[],char trajet[], char intersection_actuelle ){
+void indication_direction (struct trajet trajet[],char chemin[], char intersection_actuelle ){
     int i = 0;
 
 //1. Acceder a la bonne structure en verifiant le membre "identifiant" de la structure (ex: chemin[i].identifiant == '0ABC1')
-    while ((chemin[i].identifiant) != trajet){
+    while ((trajet[i].identifiant) != chemin){
         i++;
     }
 
 //selon l'intersection, voir la directive associe
     if (intersection_actuelle == 'A')
     {
-        //fonction:deplacement_intersection(chemin[i].A)**mouvement intersection, tout droit;
-        deplacement_intersection(trajet1[i].A);
+        deplacement_intersection(trajet[i].A);
     }
 
     if (intersection_actuelle == 'B')
     {
-        //fonction:deplacement_intersection(chemin[i].B);
-        deplacement_intersection(chemin[i].B);
+        deplacement_intersection(trajet[i].B);
     }
 
     if (intersection_actuelle == 'C'){
-        //fonction:deplacement_intersection(chemin[i].C);
-        deplacement_intersection(chemin[i].C)
+        deplacement_intersection(trajet[i].C);
     }
 
 }
