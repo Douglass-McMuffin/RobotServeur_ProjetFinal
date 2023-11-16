@@ -21,10 +21,11 @@ int B;
 int C;
 };
 
-struct trajet trajet = {"0AB2",STRAIGHT,STRAIGHT,LEFT};
+struct trajet trajet = {"0ABC3",STRAIGHT,STRAIGHT,LEFT};
 
 }
 
-void indication_direction (struct trajet trajet[],char chemin[], char intersection_actuelle );
+void indication_direction (struct trajet trajet[],char chemin[], char* p_intersection );
+void intersection_actuel (char chemin[],char* p_intersection);
 
 #endif

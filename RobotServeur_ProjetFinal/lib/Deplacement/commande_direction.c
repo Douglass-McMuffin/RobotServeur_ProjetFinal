@@ -29,7 +29,8 @@ void loop() {
                   
         //}*/
 
-void indication_direction (struct trajet trajet[],char chemin[], char intersection_actuelle ){
+void indication_direction (struct trajet trajet[],char chemin[], char* p_intersection){
+
     int i = 0;
 
 //1. Acceder a la bonne structure en verifiant le membre "identifiant" de la structure (ex: chemin[i].identifiant == '0ABC1')
@@ -38,18 +39,29 @@ void indication_direction (struct trajet trajet[],char chemin[], char intersecti
     }
 
 //selon l'intersection, voir la directive associe
-    if (intersection_actuelle == 'A')
+    if (intersection == 'A')
     {
         deplacement_intersection(trajet[i].A);
     }
 
-    if (intersection_actuelle == 'B')
+    if (intersection == 'B')
     {
         deplacement_intersection(trajet[i].B);
     }
 
-    if (intersection_actuelle == 'C'){
+    if (intersection == 'C'){
         deplacement_intersection(trajet[i].C);
     }
 
 }
+
+void intersection_actuel(char chemin[],char* p_intersection)
+{
+    int i = 0;
+    while (chemin[i] != p_intersection){
+        i++; 
+        p_intersection = chemin[(i+1)];
+    }
+}
+
+
