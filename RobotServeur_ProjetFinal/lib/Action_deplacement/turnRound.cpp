@@ -6,68 +6,9 @@ Last Updated:   10/10/2023  																	|
 By:             Maxime Gravel: gram1811 UdeS                                                    |
 Description:    Allows Robus to turn with acceleration                                          |
 ************************************************************************************************/
-#include "TurnRound.h"
-#include "forward.h"
+#include "turnRound.h"
 #include "commande_direction.h"
-/**
- * The function "turnSquare" makes the robot go a certain distance after rotating 45 degrees and the rotates again to be straight.
- * 
- * @param distance The distance between the rotations in cm.
- * @param rotation The number of pulses for a 45 degree rotation.
- * @param maxSpeed The maximum speed at which the motors can rotate.
- */
-void turnSquare(double distance, double rotation, double maxSpeed){
-    turnRight(rotation, maxSpeed);
-    moveForward1(maxSpeed, distance);
-    turnRight(rotation, maxSpeed);
-}
-/**
- * The function "turnRound" makes the robot go a quarter of a circle depending on its position(Green or Yellow).
- * 
- * @param maxSpeed The maximum speed at which the motors can rotate.
- * @param color The starting color
- */
-void turnRound(int color, double speed, double* state){
-    ENCODER_Reset(0);
-    ENCODER_Reset(1);
-    int dist_gauche;
-    int dist_droite;
-    double speed_left;
-    if (color == 0) // Green
-    { 
-        //Delay because the sensor is off by 30 degrees
-        while(ENCODER_Read(0)<1650)
-        {
-            MOTOR_SetSpeed(0, speed);
-            MOTOR_SetSpeed(1, speed);
-        }
-        ENCODER_Reset(0);
-        ENCODER_Reset(1);
-        dist_gauche = 10587; //en pulse , 11605
-        dist_droite = 6950; // 7595
-        speed_left = (dist_gauche)/(dist_droite/speed);
-    }
-    if (color == 1) // Yellow
-    { 
-        //Delay because the sensor is off by 30 degrees
-        while(ENCODER_Read(0)<3300){
-            MOTOR_SetSpeed(0, speed);
-            MOTOR_SetSpeed(1, speed);
-        }
-        ENCODER_Reset(0);
-        ENCODER_Reset(1);
-        dist_gauche =  18150; //en pulse , 18007
-        dist_droite = 14625; // 13996
-        speed_left = (dist_gauche)/(dist_droite/speed);
-    }
-    do {
-        MOTOR_SetSpeed(0, speed_left); // roue gauche
-        MOTOR_SetSpeed(1, speed); // roue droite
-    }while (ENCODER_Read(0)<dist_gauche);
-    
-    MOTOR_SetSpeed (0, speed);
-    *state += 1;
-}
+
 /**
  * The function "turnRight" rotates the robot to the right by a specified angle at a maximum speed.
  * 
@@ -166,7 +107,7 @@ void deplacement_intersection(int action)
         delay(100);
     }
 
-    if (action == RIGHT){
+    if (action == DROITE){
         turnRight(90,0.5);
 
     }

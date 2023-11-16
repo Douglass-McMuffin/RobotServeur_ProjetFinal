@@ -1,5 +1,4 @@
 #include "suiveurDeLigne.h"
-#include <Arduino.h>
 
 // La fonction devra modifier la vitesse des roues selon les capteurs
 
@@ -15,9 +14,9 @@ int eGauche, eDroite; */
 // La fonction ne retourne rien. Les variables deviennent soit 0 pour quand il voit du noir et 1 pour quand il voit du blanc
 void LireLumiere (bool *p_luxGauche, bool *p_luxCentre, bool *p_luxDroite)
 {
-    *p_luxGauche = analogRead(PIN_LUMIERE_GAUCHE) < 512;
-    *p_luxCentre = analogRead(PIN_LUMIERE_CENTRE) < 512;
-    *p_luxDroite = analogRead(PIN_LUMIERE_DROITE) < 512;
+    *p_luxGauche = digitalRead(PIN_LUMIERE_GAUCHE) ;
+    *p_luxCentre = digitalRead(PIN_LUMIERE_CENTRE) ;
+    *p_luxDroite = digitalRead(PIN_LUMIERE_DROITE) ;
     return;
 }
 

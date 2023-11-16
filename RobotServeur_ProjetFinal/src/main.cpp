@@ -5,6 +5,7 @@
 
 
 
+
 // Il faut un code pour le déplacement avec le suiveur de ligne
 /*
 
@@ -22,7 +23,7 @@ Tant qu'il n'est pas au client
 
 */
  //variables pour fonction indication_direction & intersection_actuel
-  /*char chemin[] = "0ABC3";
+  char chemin[] = "0ABC3";
   char intersection = chemin[1];
 
   //variables pour fonction lireLumiere
@@ -32,22 +33,24 @@ Tant qu'il n'est pas au client
  
   //variables pour fonction ControleMoteurLigne
   float vGauche;
-  float vDroite;*/
-  float vitesse = 0.20;/*vitesse desire lors des deplacements*/
+  float vDroite;
+  float vitesse = 0.15;/*vitesse desire lors des deplacements*/
   //chemin //definir structure
+  struct Trajet trajet[1] = {"0ABC3",STRAIGHT,STRAIGHT,LEFT};
 
 void setup() {
   BoardInit();
-  Serial.begin(9600); 
   MOTOR_SetSpeed(0, vitesse);
   MOTOR_SetSpeed(1, vitesse);
+  
 }
 //int flag = 0;
 
 void loop() {
   
   LireLumiere(&luxGauche,&luxCentre,&luxDroite);
-  if (luxGauche == 1 && luxCentre == 1 && luxDroite == 1){
+
+ if (luxGauche == 1 && luxCentre == 1 && luxDroite == 1){
     //intersection a deja ete initialiser(premiere position)
       indication_direction(trajet,chemin,&intersection); //tourne a l'intersection "actuel"
       intersection_suivant(chemin,&intersection);//avance dans la chaine de caractere chemin
@@ -55,7 +58,7 @@ void loop() {
   ControleMoteurLigne(vitesse,&vGauche,&vDroite,luxGauche,luxCentre,luxDroite);
   MOTOR_SetSpeed(0, vGauche);
   MOTOR_SetSpeed(1, vDroite);
-
+  
   /*if (flag == 0)
   {
     struct Sommet graphe[NOMBRE_DE_SOMMET];
