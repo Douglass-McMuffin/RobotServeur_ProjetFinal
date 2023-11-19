@@ -2,7 +2,6 @@
 #include <LibRobus.h>
 //#include "commande_direction.h"
 #include "MouvementInitialisateur.h"
-#include <stdio.h>
 
 //chemin //definir structure
 //variables pour fonction indication_direction
@@ -37,9 +36,9 @@ void loop() {
 
   if (flag)
   {
-    struct Sommet graphe[NOMBRE_DE_SOMMET];
-    char chemin[NOMBRE_DE_SOMMET];
+    InitialiserDirection(infoDirection);
     InitialiserGraphe(graphe);
+
     for (int i = 0; i < NOMBRE_DE_SOMMET; i++)
     {
       Serial.print(graphe[i].nom);
@@ -50,8 +49,22 @@ void loop() {
       }
       Serial.print("\n");
     }
-    Chemin(graphe, '1', '3', chemin);
-    Serial.println(chemin);
+    for (int i = 0; i < 40; i++)
+    {
+      Serial.print(infoDirection[i].nom);
+      Serial.print(" -> ");
+      Serial.println(infoDirection[i].direction);
+    }
+    char chemin[3] = {'A','B','C'};
+    Serial.println(Direction(infoDirection, chemin));
+    chemin[0] = 'O';
+    chemin[1] = 'A';
+    chemin[2] = '1';
+    Serial.println(Direction(infoDirection, chemin));
+
+
+    //Chemin(graphe, '1', '3', chemin);
+    //Serial.println(chemin);
     flag = false;
   }
 }

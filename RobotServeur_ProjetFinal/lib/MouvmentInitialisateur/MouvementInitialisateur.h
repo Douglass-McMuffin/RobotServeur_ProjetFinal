@@ -21,6 +21,12 @@ float vDroite;
 float vitesse;/*vitesse desire lors des deplacements*/
 
 
+
+struct Sommet graphe[NOMBRE_DE_SOMMET];
+char chemin[NOMBRE_DE_SOMMET];
+struct Direction infoDirection[NOMBRE_DE_DIRECTION];
+
+void InitialiserDirection (struct Direction infoDirection[NOMBRE_DE_DIRECTION]);
 void InitialiserVariableMouvement (float *p_vitesse);
 
 #endif

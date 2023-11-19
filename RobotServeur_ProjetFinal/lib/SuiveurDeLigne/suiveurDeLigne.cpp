@@ -133,6 +133,7 @@ void InitialiserGraphe (struct Sommet graphe[NOMBRE_DE_SOMMET])
     return;
 }
 
+
 //Permet de trouver le chemin entre deux points
 void Chemin (struct Sommet graphe[NOMBRE_DE_SOMMET], char debut, char fin, char *chemin)
 {
@@ -147,6 +148,7 @@ void Chemin (struct Sommet graphe[NOMBRE_DE_SOMMET], char debut, char fin, char 
     while (file.debut <= file.fin)
     {
         Defile(&file, &sommetActuel);
+        Serial.println();
         Serial.print("[");
         for (int i = 0; i < NOMBRE_DE_SOMMET; i++)
         {
@@ -161,20 +163,23 @@ void Chemin (struct Sommet graphe[NOMBRE_DE_SOMMET], char debut, char fin, char 
         Serial.print(" -> ");
         for (int i = 0; i < sommetActuel.nb_voisin; i++)
         {
-            struct Sommet voisin = *(sommetActuel.voisin[i]);
-            Serial.print(voisin.nom);
-            if (voisin.marque == 0)
+            struct Sommet *voisin;
+            AppelElement(graphe, sommetActuel.voisin[i] -> nom, voisin);
+            Serial.print(voisin -> nom);
+            Serial.print(voisin -> marque);
+            Serial.print(",");
+            if (voisin -> marque == 0)
             {
-                if (voisin.nom == fin)
+                if (voisin -> nom == fin)
                 {
                     char cheminPred[20];
                     int i = 0;
                     do
                     {
-                        cheminPred[i] = voisin.nom;
-                        voisin = *voisin.predecesseur;
+                        cheminPred[i] = voisin -> nom;
+                        voisin = voisin -> predecesseur;
                         i++;
-                    } while (voisin.nom != debut);
+                    } while (voisin -> nom != debut);
                     cheminPred[i] = debut;
                     for (int j = 0; j <= i; j++)
                     {
@@ -184,12 +189,29 @@ void Chemin (struct Sommet graphe[NOMBRE_DE_SOMMET], char debut, char fin, char 
                     *chemin = '\0';
                     return;
                 }
-                voisin.predecesseur = &sommetActuel;
-                voisin.marque = 1;
-                Enfile(&file, voisin);
+                voisin -> predecesseur = &sommetActuel;
+                voisin -> marque = 1;
+                Enfile(&file, *voisin);
                 
             }
         }
+    }
+}
+
+int Direction (struct Direction infoDirection[], char chemin[4])
+{
+    int i = 0;
+    while ((infoDirection[i].nom[0] != chemin[0] || infoDirection[i].nom[1] != chemin[1] || infoDirection[i].nom[2] != chemin[2]) && i < NOMBRE_DE_DIRECTION)
+    {
+        i++;
+    }
+    if (i < NOMBRE_DE_DIRECTION)
+    {
+        return infoDirection[i].direction;
+    }
+    else
+    {
+        return -1;
     }
 }
 
