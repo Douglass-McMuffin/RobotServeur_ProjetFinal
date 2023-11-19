@@ -1,46 +1,48 @@
 #ifndef suiveurDeLigne_h
 #define suiveurDeLigne_h
 
-#include <arduino.h>
-
-
-#define PIN_LUMIERE_GAUCHE 50
-#define PIN_LUMIERE_CENTRE 51
-#define PIN_LUMIERE_DROITE 52
-
-#define NOMBRE_DE_SOMMET 6
 
 #define LEFT 0
 #define STRAIGHT 1
 #define RIGHT 2
 
+#define PIN_LUMIERE_GAUCHE 50 //À changer dans le futur
+#define PIN_LUMIERE_CENTRE 51 //même chose
+#define PIN_LUMIERE_DROITE 52 //même chose
+
+#define NOMBRE_DE_SOMMET 16 // À mettre à jour plus tard
+#define NOMBRE_DE_DIRECTION 40 // De même
+
 
 struct Sommet {
-    char nom;
-    struct Sommet *voisin[NOMBRE_DE_SOMMET - 1];
+    char nom; // Identifiant
+    struct Sommet *voisin[NOMBRE_DE_SOMMET - 1]; // Les voisins immédiat du sommet
     int nb_voisin;
-    struct Sommet *predecesseur;
-    bool marque;
+    struct Sommet *predecesseur; // Pointe vers le sommet qui s'y rend
+    int marque; // la marque détermine si le sommet a déjà été vu.
 };
 
 struct File {
-    struct Sommet sommets[NOMBRE_DE_SOMMET];
-    int debut;
-    int fin;
+    struct Sommet sommets[NOMBRE_DE_SOMMET]; // Une file qui contient les sommets dans l'ordre de découverte
+    int debut; // index du début
+    int fin; // index de fin
 };
 
-struct Mouv {
-    char nom[4];
-    int mouvement;
+struct Direction {
+    char nom[3];
+    int direction;
 };
 
-void LireLumiere (bool *p_luxGauche, bool *p_luxCentre, bool *p_luxDroite);
-void ControleMoteurLigne (float vitesse, float *p_vGauche, float *p_vDroite, bool luxGauche, bool luxCentre, bool luxDroite);
+
+void LireLumiere (int *p_luxGauche, int *p_luxCentre, int *p_luxDroite);
+void ControleMoteurLigne (float vitesse, float *p_vGauche, float *p_vDroite, int luxGauche, int luxCentre, int luxDroite);
 void Enfile (struct File file, struct Sommet element);
 void Defile (struct File file, struct Sommet *element);
-bool Dedans (struct File file, struct Sommet element);
+int Dedans (struct File file, struct Sommet element);
 void AppelElement (struct Sommet *graphe, char nom, struct Sommet *p_sommet);
 void Chemin (struct Sommet *graphe, char debut, char fin, char *chemin);
-void InitialiserGraphe (struct Sommet *graphe);
+void AppelPointeur (struct Sommet *graphe, char nom, struct Sommet **p_sommet);
+void InitialiserGraphe (struct Sommet graphe[NOMBRE_DE_SOMMET]);
+int Direction (struct Direction infoDirection[], char chemin[3]);
 
 #endif
