@@ -33,7 +33,5 @@ int Dedans (struct File file, struct Sommet element);
 void AppelElement (struct Sommet *graphe, char nom, struct Sommet *p_sommet);
 void Chemin (struct Sommet *graphe, char debut, char fin, char *chemin);
 void AppelPointeur (struct Sommet *graphe, char nom, struct Sommet **p_sommet);
-void InitialiserGraphe (struct Sommet *graphe);
-void InitialiserVariableMouvement (float *p_vitesse);
 
 #endif
