@@ -40,6 +40,16 @@ void loop() {
     struct Sommet graphe[NOMBRE_DE_SOMMET];
     char chemin[NOMBRE_DE_SOMMET];
     InitialiserGraphe(graphe);
+    for (int i = 0; i < NOMBRE_DE_SOMMET; i++)
+    {
+      Serial.print(graphe[i].nom);
+      Serial.print(" : ");
+      for (int j = 0; j < graphe[i].nb_voisin; j++)
+      {
+        Serial.print(graphe[i].voisin[j] -> nom);
+      }
+      Serial.print("\n");
+    }
     Chemin(graphe, '1', '3', chemin);
     Serial.println(chemin);
     flag = false;

@@ -52,19 +52,19 @@ void ControleMoteurLigne (float vitesse, float *p_vGauche, float *p_vDroite, int
 }
 
 //Pour les files, permet d'ajouter un element
-void Enfile (struct File file, struct Sommet element)
+void Enfile (struct File *file, struct Sommet element)
 {
-    file.sommets[file.fin] = element;
-    file.fin++;
+    file -> sommets[file -> fin] = element;
+    file -> fin++;
 }
 
 //Pour les files, permet de prendre un element
-void Defile (struct File file, struct Sommet *element)
+void Defile (struct File *file, struct Sommet *element)
 {
-    if (file.debut <= file.fin) // Vérifie s'il reste des éléments dans la file
+    if (file -> debut <= file -> fin) // Vérifie s'il reste des éléments dans la file
     {
-        *element = file.sommets[file.debut];
-        file.debut++;
+        *element = file -> sommets[file -> debut];
+        file -> debut++;
     }
 }
 
@@ -99,22 +99,70 @@ void AppelPointeur (struct Sommet *graphe, char nom, struct Sommet **p_sommet)
     *p_sommet = index;
 }
 
+void InitialiserGraphe (struct Sommet graphe[NOMBRE_DE_SOMMET])
+{
+    char sommets[] = "OABCDEFG01234567;O : AD;A : OB1;B : AC2;C : B3;D : OE4;E : DF5;F : EG6;G : F7;0 : O;1 : A;2 : B;3 : C;4 : D;5 : E;6 : F;7 : G;\0";
+    int i = 0;
+    Serial.println("JE VAIS RÉINITIALISER LE GRAPHE");
+    int nombre_voisin;
+    struct Sommet *sommetActuel;
+    struct Sommet *indexVoisin;
+    while (sommets[i] != ';') // Créer tous les sommets
+    {
+        graphe[i].nom = sommets[i];
+        i++;
+    }
+    i++;
+    do { // Ajouter les voisins
+        AppelPointeur(graphe, sommets[i], &sommetActuel);
+        i += 4; // Skip les 3 autres caractères
+        nombre_voisin = 0;
+        while (sommets[i] != ';')
+        {
+            AppelPointeur(graphe, sommets[i], &indexVoisin); // Enregistre le voisin
+            sommetActuel -> voisin[nombre_voisin] = indexVoisin;
+            i++;
+            nombre_voisin++;
+        }
+        i++;
+        sommetActuel -> nb_voisin = nombre_voisin;
+        sommetActuel -> marque = 0;
+
+    } while (sommets[i] != '\0');
+
+    return;
+}
+
 //Permet de trouver le chemin entre deux points
-void Chemin (struct Sommet *graphe, char debut, char fin, char *chemin)
+void Chemin (struct Sommet graphe[NOMBRE_DE_SOMMET], char debut, char fin, char *chemin)
 {
     struct File file;
     file.debut = 0; file.fin = 0;
     struct Sommet sommetActuel;
-
+    InitialiserGraphe(graphe);
     AppelElement(graphe, debut, &sommetActuel);
-    Enfile (file, sommetActuel);
     sommetActuel.marque = 1;
+    Enfile (&file, sommetActuel);
+    
     while (file.debut <= file.fin)
     {
-        Defile(file, &sommetActuel);
+        Defile(&file, &sommetActuel);
+        Serial.print("[");
+        for (int i = 0; i < NOMBRE_DE_SOMMET; i++)
+        {
+            Serial.print(file.sommets[i].nom);
+            Serial.print(file.sommets[i].marque);
+            Serial.print(", ");
+        }
+        Serial.print("]");
+        Serial.println();
+        Serial.print("Le nom est ");
+        Serial.print(sommetActuel.nom);
+        Serial.print(" -> ");
         for (int i = 0; i < sommetActuel.nb_voisin; i++)
         {
             struct Sommet voisin = *(sommetActuel.voisin[i]);
+            Serial.print(voisin.nom);
             if (voisin.marque == 0)
             {
                 if (voisin.nom == fin)
@@ -137,8 +185,9 @@ void Chemin (struct Sommet *graphe, char debut, char fin, char *chemin)
                     return;
                 }
                 voisin.predecesseur = &sommetActuel;
-                Enfile(file, voisin);
                 voisin.marque = 1;
+                Enfile(&file, voisin);
+                
             }
         }
     }

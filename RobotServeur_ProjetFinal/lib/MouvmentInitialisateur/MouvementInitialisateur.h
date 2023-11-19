@@ -21,7 +21,6 @@ float vDroite;
 float vitesse;/*vitesse desire lors des deplacements*/
 
 
-void InitialiserGraphe (struct Sommet *graphe);
 void InitialiserVariableMouvement (float *p_vitesse);
 
 #endif
