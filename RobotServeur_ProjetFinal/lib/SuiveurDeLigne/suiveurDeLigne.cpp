@@ -80,28 +80,28 @@ int Dedans (struct File file, struct Sommet element)
 }
 
 //Pour les graphes, permet de prendre d'un sommet
-void AppelElement (struct Sommet *graphe, char nom, struct Sommet *p_sommet)
+struct Sommet AppelElement (struct Sommet *graphe, char nom)
 {
     struct Sommet *index;
     index = graphe;
     while (index -> nom != nom)
         index++;
-    *p_sommet = *index;
+    return *index;
 }
 
 //Pour les graphes, permet de prendre l'adresse d'un sommet
-void AppelPointeur (struct Sommet *graphe, char nom, struct Sommet **p_sommet)
+struct Sommet *AppelPointeur (struct Sommet *graphe, char nom)
 {
     struct Sommet *index;
     index = graphe;
     while (index -> nom != nom)
         index++;
-    *p_sommet = index;
+    return index;
 }
 
 void InitialiserGraphe (struct Sommet graphe[NOMBRE_DE_SOMMET])
 {
-    char sommets[] = "OABCDEFG01234567;O : AD;A : OB1;B : AC2;C : B3;D : OE4;E : DF5;F : EG6;G : F7;0 : O;1 : A;2 : B;3 : C;4 : D;5 : E;6 : F;7 : G;\0";
+    char sommets[] = "OABCDEFG01234567;O : AD0;A : OB1;B : AC2;C : B3;D : OE4;E : DF5;F : EG6;G : F7;0 : O;1 : A;2 : B;3 : C;4 : D;5 : E;6 : F;7 : G;\0";
     int i = 0;
     Serial.println("JE VAIS RÉINITIALISER LE GRAPHE");
     int nombre_voisin;
@@ -114,12 +114,12 @@ void InitialiserGraphe (struct Sommet graphe[NOMBRE_DE_SOMMET])
     }
     i++;
     do { // Ajouter les voisins
-        AppelPointeur(graphe, sommets[i], &sommetActuel);
+        sommetActuel = AppelPointeur(graphe, sommets[i]);
         i += 4; // Skip les 3 autres caractères
         nombre_voisin = 0;
         while (sommets[i] != ';')
         {
-            AppelPointeur(graphe, sommets[i], &indexVoisin); // Enregistre le voisin
+            indexVoisin = AppelPointeur(graphe, sommets[i]); // Enregistre le voisin
             sommetActuel -> voisin[nombre_voisin] = indexVoisin;
             i++;
             nombre_voisin++;
@@ -139,47 +139,37 @@ void Chemin (struct Sommet graphe[NOMBRE_DE_SOMMET], char debut, char fin, char 
 {
     struct File file;
     file.debut = 0; file.fin = 0;
+    struct Sommet *premierSommet;
+    struct Sommet *voisin;
     struct Sommet sommetActuel;
     InitialiserGraphe(graphe);
-    AppelElement(graphe, debut, &sommetActuel);
-    sommetActuel.marque = 1;
-    Enfile (&file, sommetActuel);
+    premierSommet = AppelPointeur(graphe, debut);
+    premierSommet -> marque = 1;
+    Enfile (&file, *premierSommet);
     
     while (file.debut <= file.fin)
     {
         Defile(&file, &sommetActuel);
-        Serial.println();
-        Serial.print("[");
-        for (int i = 0; i < NOMBRE_DE_SOMMET; i++)
-        {
-            Serial.print(file.sommets[i].nom);
-            Serial.print(file.sommets[i].marque);
-            Serial.print(", ");
-        }
-        Serial.print("]");
-        Serial.println();
-        Serial.print("Le nom est ");
-        Serial.print(sommetActuel.nom);
-        Serial.print(" -> ");
         for (int i = 0; i < sommetActuel.nb_voisin; i++)
         {
-            struct Sommet *voisin;
-            AppelElement(graphe, sommetActuel.voisin[i] -> nom, voisin);
-            Serial.print(voisin -> nom);
-            Serial.print(voisin -> marque);
-            Serial.print(",");
+            
+            voisin = AppelPointeur(graphe, sommetActuel.voisin[i] -> nom);
+            
             if (voisin -> marque == 0)
             {
                 if (voisin -> nom == fin)
                 {
+                    voisin -> predecesseur = AppelPointeur(graphe, sommetActuel.nom);
                     char cheminPred[20];
                     int i = 0;
                     do
                     {
                         cheminPred[i] = voisin -> nom;
+                        
                         voisin = voisin -> predecesseur;
                         i++;
                     } while (voisin -> nom != debut);
+                    
                     cheminPred[i] = debut;
                     for (int j = 0; j <= i; j++)
                     {
@@ -189,7 +179,7 @@ void Chemin (struct Sommet graphe[NOMBRE_DE_SOMMET], char debut, char fin, char 
                     *chemin = '\0';
                     return;
                 }
-                voisin -> predecesseur = &sommetActuel;
+                voisin -> predecesseur = AppelPointeur(graphe, sommetActuel.nom);
                 voisin -> marque = 1;
                 Enfile(&file, *voisin);
                 

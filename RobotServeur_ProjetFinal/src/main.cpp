@@ -37,34 +37,9 @@ void loop() {
   if (flag)
   {
     InitialiserDirection(infoDirection);
-    InitialiserGraphe(graphe);
-
-    for (int i = 0; i < NOMBRE_DE_SOMMET; i++)
-    {
-      Serial.print(graphe[i].nom);
-      Serial.print(" : ");
-      for (int j = 0; j < graphe[i].nb_voisin; j++)
-      {
-        Serial.print(graphe[i].voisin[j] -> nom);
-      }
-      Serial.print("\n");
-    }
-    for (int i = 0; i < 40; i++)
-    {
-      Serial.print(infoDirection[i].nom);
-      Serial.print(" -> ");
-      Serial.println(infoDirection[i].direction);
-    }
-    char chemin[3] = {'A','B','C'};
-    Serial.println(Direction(infoDirection, chemin));
-    chemin[0] = 'O';
-    chemin[1] = 'A';
-    chemin[2] = '1';
-    Serial.println(Direction(infoDirection, chemin));
-
-
-    //Chemin(graphe, '1', '3', chemin);
-    //Serial.println(chemin);
+    Chemin(graphe, '3', '7', chemin);
+    Serial.println();
+    Serial.println(chemin);
     flag = false;
   }
 }
