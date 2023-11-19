@@ -20,6 +20,10 @@ float vGauche;
 float vDroite;
 float vitesse;/*vitesse desire lors des deplacements*/
 
+bool arret; // est vrai si le robot ne bouge pas
+
+
+
 
 
 struct Sommet graphe[NOMBRE_DE_SOMMET];

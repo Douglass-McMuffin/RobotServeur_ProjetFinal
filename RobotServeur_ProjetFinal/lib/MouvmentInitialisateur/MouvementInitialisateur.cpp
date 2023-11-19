@@ -53,6 +53,8 @@ void InitialiserDirection (struct Direction infoDirection[NOMBRE_DE_DIRECTION])
     return;
 }
 
+
+
 void InitialiserVariableMouvement (float *p_vitesse)
 {
     // ICI ON PEUT DÉTERMINER LES VALEURS POUR LES VARIABLES

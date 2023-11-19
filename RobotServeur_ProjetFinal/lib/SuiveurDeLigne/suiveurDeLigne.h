@@ -39,9 +39,9 @@ void ControleMoteurLigne (float vitesse, float *p_vGauche, float *p_vDroite, int
 void Enfile (struct File file, struct Sommet element);
 void Defile (struct File file, struct Sommet *element);
 int Dedans (struct File file, struct Sommet element);
-void AppelElement (struct Sommet *graphe, char nom, struct Sommet *p_sommet);
+struct Sommet AppelElement (struct Sommet *graphe, char nom);
 void Chemin (struct Sommet *graphe, char debut, char fin, char *chemin);
-void AppelPointeur (struct Sommet *graphe, char nom, struct Sommet **p_sommet);
+struct Sommet *AppelPointeur (struct Sommet *graphe, char nom);
 void InitialiserGraphe (struct Sommet graphe[NOMBRE_DE_SOMMET]);
 int Direction (struct Direction infoDirection[], char chemin[3]);
 
