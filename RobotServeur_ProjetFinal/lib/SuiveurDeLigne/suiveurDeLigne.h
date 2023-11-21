@@ -3,9 +3,9 @@
 
 #include <Arduino.h>
 
-#define PIN_LUMIERE_GAUCHE 40
-#define PIN_LUMIERE_CENTRE 41
-#define PIN_LUMIERE_DROITE 42
+#define PIN_LUMIERE_GAUCHE A11
+#define PIN_LUMIERE_CENTRE A10
+#define PIN_LUMIERE_DROITE A4
 
 #define NOMBRE_DE_SOMMET 6
 

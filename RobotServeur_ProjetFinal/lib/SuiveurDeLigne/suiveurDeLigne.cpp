@@ -14,38 +14,50 @@ int eGauche, eDroite; */
 // La fonction ne retourne rien. Les variables deviennent soit 0 pour quand il voit du noir et 1 pour quand il voit du blanc
 void LireLumiere (bool *p_luxGauche, bool *p_luxCentre, bool *p_luxDroite)
 {
-    *p_luxGauche = digitalRead(PIN_LUMIERE_GAUCHE) ;
-    *p_luxCentre = digitalRead(PIN_LUMIERE_CENTRE) ;
-    *p_luxDroite = digitalRead(PIN_LUMIERE_DROITE) ;
-    return;
+    *p_luxGauche = analogRead(PIN_LUMIERE_GAUCHE) < 512;
+    *p_luxCentre = analogRead(PIN_LUMIERE_CENTRE) < 512;
+    *p_luxDroite = analogRead(PIN_LUMIERE_DROITE) < 512;
+    //Serial.print(*p_luxDroite);
+    //Serial.print(analogRead(PIN_LUMIERE_DROITE));
+    //Serial.print("\n");
 }
 
 void ControleMoteurLigne (float vitesse, float *p_vGauche, float *p_vDroite, bool luxGauche, bool luxCentre, bool luxDroite)
 {
     // Si le robot est sur la ligne noir (centre activé)
-    if (luxGauche)
-    {
-        if(!luxCentre)
-        {
-            *p_vGauche = -vitesse/2;
-            *p_vDroite = vitesse;
-        }
-    }
+   
     if (luxCentre)
     {
-        if(!luxGauche && !luxDroite)
+        *p_vGauche = vitesse;
+        *p_vDroite = vitesse;
+        /*if(!luxGauche && !luxDroite)
         {
             *p_vGauche = vitesse;
             *p_vDroite = vitesse;
-        }
+        }*/
     }
+
+
+    if (luxGauche)
+    {
+        *p_vGauche = -vitesse/2;
+        *p_vDroite = vitesse;
+       /*if(!luxCentre)
+        {
+            *p_vGauche = vitesse/2;
+            *p_vDroite = vitesse;
+        }*/
+    }
+   
     if (luxDroite)
     {
-        if(!luxCentre)
+        *p_vGauche = vitesse;
+        *p_vDroite = -vitesse/2;
+       /* if(!luxCentre)
         {
             *p_vGauche = vitesse;
-            *p_vDroite = -vitesse/2;
-        }
+            *p_vDroite = vitesse/2;
+        }*/
     }
 }
 
