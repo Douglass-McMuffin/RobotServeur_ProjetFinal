@@ -100,15 +100,18 @@ void turnLeft(double angle, double maxSpeed)
 void deplacement_intersection(int action)
 {
     if (action == LEFT){
-        turnLeft(90,0.5);
+        turnLeft((2*turn45),0.20);
+        Serial.print("turnleft");
     }
 
     if (action == STRAIGHT){
-        delay(100);
+        Serial.print("staight");
+        delay(400); 
     }
 
     if (action == DROITE){
-        turnRight(90,0.5);
+        turnRight((2*turn45),0.20);
+        Serial.print("turnright");
 
     }
     

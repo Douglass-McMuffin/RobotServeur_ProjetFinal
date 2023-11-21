@@ -42,9 +42,9 @@ void intersection_suivant(char chemin[],char* p_intersection)
 {
     int i = 0;
     while (chemin[i] != *p_intersection){
-        i++; 
-        *p_intersection = chemin[(i+1)];
+        i++;  
     }
+    *p_intersection = chemin[(i+1)];
 }
 
 

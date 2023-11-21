@@ -15,7 +15,7 @@ int eGauche, eDroite; */
 void LireLumiere (bool *p_luxGauche, bool *p_luxCentre, bool *p_luxDroite)
 {
     *p_luxGauche = analogRead(PIN_LUMIERE_GAUCHE) < 256;
-    *p_luxCentre = analogRead(PIN_LUMIERE_CENTRE) < 256;
+    *p_luxCentre = analogRead(PIN_LUMIERE_CENTRE) < 300;
     *p_luxDroite = analogRead(PIN_LUMIERE_DROITE) < 256;
     //Serial.print(*p_luxDroite);
     //Serial.print(analogRead(PIN_LUMIERE_DROITE));

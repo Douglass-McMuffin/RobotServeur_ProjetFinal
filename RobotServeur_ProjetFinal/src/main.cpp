@@ -51,17 +51,20 @@ void loop() {
   if (flag)
   {
     LireLumiere(&luxGauche,&luxCentre,&luxDroite);
-    Serial.print("Gauche = ");
+    /*Serial.print("Gauche = ");
     Serial.print(luxGauche);
     Serial.print(" Centre = ");
     Serial.print(luxCentre);
     Serial.print(" Droite = ");
-    Serial.println(luxDroite);
-  /*if (luxGauche == 1 && luxCentre == 1 && luxDroite == 1){
+    Serial.println(luxDroite);*/
+  if (!luxCentre && !luxDroite && !luxGauche){
       //intersection a deja ete initialiser(premiere position)
         indication_direction(trajet,chemin,&intersection); //tourne a l'intersection "actuel"
         intersection_suivant(chemin,&intersection);//avance dans la chaine de caractere chemin
-    }*/
+        Serial.print("big ballz");  
+        delay(500); 
+    }
+    
     ControleMoteurLigne(vitesse,&vGauche,&vDroite,luxGauche,luxCentre,luxDroite);
     MOTOR_SetSpeed(0, vGauche);
     MOTOR_SetSpeed(1, vDroite);
