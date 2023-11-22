@@ -1,18 +1,17 @@
 #ifndef suiveurDeLigne_h
 #define suiveurDeLigne_h
 
+#include <Arduino.h>
 
 #define LEFT 0
 #define STRAIGHT 1
 #define RIGHT 2
 
-#define PIN_LUMIERE_GAUCHE 50 //À changer dans le futur
-#define PIN_LUMIERE_CENTRE 51 //même chose
-#define PIN_LUMIERE_DROITE 52 //même chose
+#define PIN_LUMIERE_GAUCHE A12
+#define PIN_LUMIERE_CENTRE A11
+#define PIN_LUMIERE_DROITE A10
 
-#define NOMBRE_DE_SOMMET 16 // À mettre à jour plus tard
-#define NOMBRE_DE_DIRECTION 40 // De même
-
+#define NOMBRE_DE_SOMMET 16
 
 struct Sommet {
     char nom; // Identifiant
