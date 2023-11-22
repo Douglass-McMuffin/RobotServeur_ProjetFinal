@@ -12,6 +12,7 @@
 #define PIN_LUMIERE_DROITE A10
 
 #define NOMBRE_DE_SOMMET 16
+#define NOMBRE_DE_DIRECTION 40
 
 struct Sommet {
     char nom; // Identifiant
@@ -43,5 +44,6 @@ void Chemin (struct Sommet *graphe, char debut, char fin, char *chemin);
 struct Sommet *AppelPointeur (struct Sommet *graphe, char nom);
 void InitialiserGraphe (struct Sommet graphe[NOMBRE_DE_SOMMET]);
 int Direction (struct Direction infoDirection[], char chemin[3]);
+int IndexChemin (char *chemin, char intersection);
 
 #endif

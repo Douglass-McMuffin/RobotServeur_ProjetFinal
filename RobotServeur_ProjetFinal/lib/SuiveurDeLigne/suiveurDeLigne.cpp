@@ -155,13 +155,14 @@ void InitialiserGraphe (struct Sommet graphe[NOMBRE_DE_SOMMET])
 
 
 //Permet de trouver le chemin entre deux points
-void Chemin (struct Sommet graphe[NOMBRE_DE_SOMMET], char debut, char fin, char *chemin)
+void Chemin (char debut, char fin, char *chemin)
 {
     struct File file;
     file.debut = 0; file.fin = 0;
     struct Sommet *premierSommet;
     struct Sommet *voisin;
     struct Sommet sommetActuel;
+    struct Sommet graphe[NOMBRE_DE_SOMMET];
     InitialiserGraphe(graphe);
     premierSommet = AppelPointeur(graphe, debut);
     premierSommet -> marque = 1;
@@ -208,7 +209,7 @@ void Chemin (struct Sommet graphe[NOMBRE_DE_SOMMET], char debut, char fin, char 
     }
 }
 
-int Direction (struct Direction infoDirection[], char chemin[4])
+int Direction (struct Direction infoDirection[], char chemin[3])
 {
     int i = 0;
     while ((infoDirection[i].nom[0] != chemin[0] || infoDirection[i].nom[1] != chemin[1] || infoDirection[i].nom[2] != chemin[2]) && i < NOMBRE_DE_DIRECTION)
@@ -224,6 +225,14 @@ int Direction (struct Direction infoDirection[], char chemin[4])
         return -1;
     }
 }
+
+int IndexChemin (char *chemin, char intersection)
+{
+    int i = 0;
+    for (;chemin[i] != intersection;i++);
+    return i;
+}
+
 
 
 
