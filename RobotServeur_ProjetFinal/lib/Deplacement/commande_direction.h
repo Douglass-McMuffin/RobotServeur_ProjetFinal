@@ -1,9 +1,8 @@
 #ifndef commande_direction_h
 #define commande_direction_h
 
-#include <stdio.h>
-#include "LibRobus.h"
-#include <arduino.h> // necessaire?
+
+#include <Arduino.h> // necessaire?
 #define LEFT 0
 #define STRAIGHT 1
 #define DROITE 2

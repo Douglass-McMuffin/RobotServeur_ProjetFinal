@@ -1,4 +1,4 @@
-#include "MouvementInitialisateur.h"
+#include <MouvementInitialisateur.h>
 #include <Arduino.h>
 
 
@@ -50,7 +50,6 @@ void InitialiserDirection (struct Direction infoDirection[NOMBRE_DE_DIRECTION])
     infoDirection[37] = {{'5','E','D'}, LEFT};
     infoDirection[38] = {{'6','F','E'}, LEFT};
     infoDirection[39] = {{'7','G','F'}, LEFT};
-    return;
 }
 
 
@@ -76,11 +75,11 @@ void InitialiserVariableMouvement (float *p_vitesse, float *p_vGauche, float *p_
 
     InitialiserDirection(p_infoDirection);
     
-    return;
 }
 
 void MouvementGlobal(struct Direction *p_infoDirection, char *p_chemin, float *p_vitesse, float *p_vGauche, float *p_vDroite, bool *p_luxGauche, bool *p_luxCentre, bool *p_luxDroite, char *p_intersectionActuelle, char *p_intersectionDebut, char *p_intersectionFin, bool *p_arret)
 {
+    /*
     if (!*p_arret) // S'il bouge
     {
         LireLumiere(p_luxGauche, p_luxCentre, p_luxDroite);
@@ -124,4 +123,5 @@ void MouvementGlobal(struct Direction *p_infoDirection, char *p_chemin, float *p
         *p_arret = false;
 
     }
+    */
 }

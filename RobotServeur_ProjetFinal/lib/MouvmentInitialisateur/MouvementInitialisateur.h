@@ -22,7 +22,8 @@ bool luxDroite;
 //variables pour fonction ControleMoteurLigne
 float vGauche;
 float vDroite;
-float vitesse;/*vitesse desire lors des deplacements*/
+float vitesse;
+//vitesse desire lors des deplacements
 
 char intersectionDebut;
 char intersectionFin;
