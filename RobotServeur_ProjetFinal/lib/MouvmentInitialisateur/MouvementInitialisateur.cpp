@@ -79,7 +79,7 @@ void InitialiserVariableMouvement (float *p_vitesse, float *p_vGauche, float *p_
 
 void MouvementGlobal(struct Direction *p_infoDirection, char *p_chemin, float *p_vitesse, float *p_vGauche, float *p_vDroite, bool *p_luxGauche, bool *p_luxCentre, bool *p_luxDroite, char *p_intersectionActuelle, char *p_intersectionDebut, char *p_intersectionFin, bool *p_arret)
 {
-    /*
+    
     if (!*p_arret) // S'il bouge
     {
         LireLumiere(p_luxGauche, p_luxCentre, p_luxDroite);
@@ -116,12 +116,12 @@ void MouvementGlobal(struct Direction *p_infoDirection, char *p_chemin, float *p
     {
         Chemin(*p_intersectionActuelle, *p_intersectionFin, p_chemin);
         *p_intersectionDebut = p_chemin[0];
-        intersection_suivant(chemin, p_intersectionActuelle);
+        intersection_suivant(p_chemin, p_intersectionActuelle);
 
         // ICI, on doit faire 180 degrée pour pointer dans la bonne direction
 
         *p_arret = false;
 
     }
-    */
+    
 }
