@@ -14,5 +14,12 @@ void setup() {
 
 void loop() {
   MouvementGlobal(infoDirection, chemin, &vitesse, &vGauche, &vDroite, &luxGauche, &luxCentre, &luxDroite, &intersection_actuelle, &intersectionDebut, &intersectionFin, &arret);
-  
+  //client = /*Vérifier bouton ClientAssigner()*/;
+  //if (client != '0');
+  //{
+  //  EnfileClient(*GestionClient, client);
+  //}
+
+
+
 }

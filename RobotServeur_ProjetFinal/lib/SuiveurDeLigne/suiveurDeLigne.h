@@ -5,7 +5,7 @@
 
 #define LEFT 0
 #define STRAIGHT 1
-#define RIGHT 2
+#define DROITE 2
 
 #define PIN_LUMIERE_GAUCHE A12
 #define PIN_LUMIERE_CENTRE A11
@@ -34,13 +34,13 @@ struct Direction {
 };
 
 
-void LireLumiere (int *p_luxGauche, int *p_luxCentre, int *p_luxDroite);
-void ControleMoteurLigne (float vitesse, float *p_vGauche, float *p_vDroite, int luxGauche, int luxCentre, int luxDroite);
+void LireLumiere (bool *p_luxGauche, bool *p_luxCentre, bool *p_luxDroite);
+void ControleMoteurLigne (float vitesse, float *p_vGauche, float *p_vDroite, bool luxGauche, bool luxCentre, bool luxDroite);
 void Enfile (struct File file, struct Sommet element);
 void Defile (struct File file, struct Sommet *element);
 int Dedans (struct File file, struct Sommet element);
 struct Sommet AppelElement (struct Sommet *graphe, char nom);
-void Chemin (struct Sommet *graphe, char debut, char fin, char *chemin);
+void Chemin (char debut, char fin, char *chemin);
 struct Sommet *AppelPointeur (struct Sommet *graphe, char nom);
 void InitialiserGraphe (struct Sommet graphe[NOMBRE_DE_SOMMET]);
 int Direction (struct Direction infoDirection[], char chemin[3]);

@@ -1,6 +1,6 @@
 #include "GestionBouton.h"
 
-int DedansBouton (struct FileBouton file, char client)
+int DedansClient (struct FileGestion file, char client)
 {
     for (int i = 0; i < NOMBRE_DE_BOUTON; i++)
     {
@@ -10,13 +10,13 @@ int DedansBouton (struct FileBouton file, char client)
     return 0;
 }
 
-void EnfileBouton (struct FileBouton *file, char client)
+void EnfileClient (struct FileGestion *file, char client)
 {
     if (file -> debut == ((file -> fin) + 1) % NOMBRE_DE_BOUTON) // La liste est remplie
     {
         return;
     }
-    if (DedansBouton(*file, client) == 0)
+    if (DedansClient(*file, client) == 0)
     {
         file -> client[file -> fin] = client;
         file -> fin = (file -> fin + 1) % NOMBRE_DE_BOUTON;
@@ -25,7 +25,7 @@ void EnfileBouton (struct FileBouton *file, char client)
 }
 
 //Pour les files, permet de prendre un element
-char DefileBouton (struct FileBouton *file)
+char DefileClient (struct FileGestion *file)
 {
     if (file -> debut != file -> fin) // Vérifie s'il reste des éléments dans la file
     {

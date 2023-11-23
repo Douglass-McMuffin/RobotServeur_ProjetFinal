@@ -1,4 +1,3 @@
-
 #include "MouvementInitialisateur.h"
 #include <Arduino.h>
 
@@ -20,21 +19,21 @@ void InitialiserDirection (struct Direction infoDirection[NOMBRE_DE_DIRECTION])
     infoDirection[10] = {{'F','E','D'}, STRAIGHT};
     infoDirection[11] = {{'G','F','E'}, STRAIGHT};
 
-    infoDirection[12] = {{'3','C','B'}, RIGHT};
-    infoDirection[13] = {{'2','B','A'}, RIGHT};
-    infoDirection[14] = {{'1','A','O'}, RIGHT};
-    infoDirection[15] = {{'0','O','A'}, RIGHT};
-    infoDirection[16] = {{'4','D','E'}, RIGHT};
-    infoDirection[17] = {{'5','E','F'}, RIGHT};
-    infoDirection[18] = {{'6','F','G'}, RIGHT};
+    infoDirection[12] = {{'3','C','B'}, DROITE};
+    infoDirection[13] = {{'2','B','A'}, DROITE};
+    infoDirection[14] = {{'1','A','O'}, DROITE};
+    infoDirection[15] = {{'0','O','A'}, DROITE};
+    infoDirection[16] = {{'4','D','E'}, DROITE};
+    infoDirection[17] = {{'5','E','F'}, DROITE};
+    infoDirection[18] = {{'6','F','G'}, DROITE};
 
-    infoDirection[19] = {{'C','B','2'}, RIGHT};
-    infoDirection[20] = {{'B','A','1'}, RIGHT};
-    infoDirection[21] = {{'O','D','4'}, RIGHT};
-    infoDirection[22] = {{'D','O','0'}, RIGHT};
-    infoDirection[23] = {{'D','E','5'}, RIGHT};
-    infoDirection[24] = {{'E','F','6'}, RIGHT};
-    infoDirection[25] = {{'F','G','7'}, RIGHT};
+    infoDirection[19] = {{'C','B','2'}, DROITE};
+    infoDirection[20] = {{'B','A','1'}, DROITE};
+    infoDirection[21] = {{'O','D','4'}, DROITE};
+    infoDirection[22] = {{'D','O','0'}, DROITE};
+    infoDirection[23] = {{'D','E','5'}, DROITE};
+    infoDirection[24] = {{'E','F','6'}, DROITE};
+    infoDirection[25] = {{'F','G','7'}, DROITE};
 
     infoDirection[26] = {{'B','C','3'}, LEFT};
     infoDirection[27] = {{'A','B','2'}, LEFT};
@@ -63,10 +62,17 @@ void InitialiserVariableMouvement (float *p_vitesse, float *p_vGauche, float *p_
     *p_vitesse = 0.5;
     *p_vGauche = *p_vitesse;
     *p_vDroite = *p_vitesse;
-    *p_intersectionActuelle = 'O';
+    *p_intersectionActuelle = '0';
     *p_intersectionDebut = *p_intersectionActuelle;
     *p_intersectionFin = '\0';
     *p_arret = true;
+    //GestionClient -> debut = 0;
+    //GestionClient -> fin = 0;
+    //for (int i = 0; i < NOMBRE_DE_BOUTON; i++)
+    //{
+    //    GestionClient -> client[i] = '\0';
+    //}
+
 
     InitialiserDirection(p_infoDirection);
     
@@ -84,12 +90,12 @@ void MouvementGlobal(struct Direction *p_infoDirection, char *p_chemin, float *p
             {
                 // On est dans une intersection
                 int index = IndexChemin(p_chemin, *p_intersectionActuelle);
-                char tournant[3] = {p_chemin[index - 1], p_chemin[index], p_chemin[index + 1]};
-                int direction = Direction(p_infoDirection, tournant); // LEFT = 0, STRAIGH = 1, RIGHT = 2
+                char action[3] = {p_chemin[index - 1], p_chemin[index], p_chemin[index + 1]};
+                int direction = Direction(p_infoDirection, action); // LEFT = 0, STRAIGH = 1, DROITE = 2
 
                 // ICI, il faut tourner avec la bonne direction (Partie Hardcoder)
 
-                intersection_suivant(chemin, p_intersectionActuelle);
+                intersection_suivant(p_chemin, p_intersectionActuelle);
             }
             else 
             {
@@ -102,6 +108,8 @@ void MouvementGlobal(struct Direction *p_infoDirection, char *p_chemin, float *p
         if (!*p_arret)
         {
             ControleMoteurLigne(*p_vitesse, p_vGauche, p_vDroite, *p_luxGauche, *p_luxCentre, *p_luxDroite);
+            MOTOR_SetSpeed(0,*p_vGauche);
+            MOTOR_SetSpeed(1,*p_vDroite);
         }
     }
     // S'il ne bouge pas
