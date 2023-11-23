@@ -1,12 +1,11 @@
 #ifndef commande_direction_h
 #define commande_direction_h
 
-#include <stdio.h>
-#include <libRobus.h>
-#include <arduino.h> // necessaire?
+
+#include <Arduino.h> // necessaire?
 #define LEFT 0
 #define STRAIGHT 1
-#define RIGHT 2
+#define DROITE 2
 
 
 /**
@@ -14,17 +13,15 @@
  * @param identifiant chemin, premiere lettre represente le depart, la derniere lettre la fin
  * @param membres chaque intersection contenant les valeurs suivantes: 0 = left ; 1 = straight ; 2 = right.
 */
-struct trajet{
+struct Trajet{
 char identifiant[6];
 int A;
 int B;
 int C;
 };
 
-struct trajet trajet = {"0AB2",STRAIGHT,STRAIGHT,LEFT};
 
-}
-
-void indication_direction (struct trajet trajet[],char chemin[], char intersection_actuelle );
+void indication_direction (struct Trajet trajet[],char chemin[], char* p_intersection );
+void intersection_suivant (char chemin[],char* p_intersection);
 
 #endif
