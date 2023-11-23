@@ -1,8 +1,10 @@
 #include <Arduino.h>
 #include <LibRobus.h>
 //#include "commande_direction.h"
-#include <LibRobus.h>
 #include "MouvementInitialisateur.h"
+#include "drinkSelection.h"
+
+
 
 char intersection;
 char trajet[10];
@@ -28,6 +30,9 @@ bool arret; // est vrai si le robot ne bouge pas
 
 char intersectionActuelle;
 
+// variables prise de commande(choix)
+int counter = 1000001, aLastState, aState, positionX, positionY, globalState = 0;
+int drink;
 
 
 
@@ -37,18 +42,29 @@ struct Direction infoDirection[NOMBRE_DE_DIRECTION];
 
 void setup() {
   BoardInit();
-  InitialiserVariableMouvement(&vitesse, &vGauche, &vDroite, infoDirection, &intersection_actuelle, &intersectionDebut, &intersectionFin, &arret);
+  pinMode (outputA,INPUT);
+  pinMode (outputB,INPUT);
+  pinMode (inputSW, INPUT_PULLUP);
+  aLastState = digitalRead(outputA); 
+
+  DISPLAY_Clear();
+  menuInit(counter,&positionX,&positionY);
+ //InitialiserVariableMouvement(&vitesse, &vGauche, &vDroite, infoDirection, &intersection_actuelle, &intersectionDebut, &intersectionFin, &arret);
 }
 
 
 void loop() {
-  MouvementGlobal(infoDirection, chemin, &vitesse, &vGauche, &vDroite, &luxGauche, &luxCentre, &luxDroite, &intersection_actuelle, &intersectionDebut, &intersectionFin, &arret);
+  //MouvementGlobal(infoDirection, chemin, &vitesse, &vGauche, &vDroite, &luxGauche, &luxCentre, &luxDroite, &intersection_actuelle, &intersectionDebut, &intersectionFin, &arret);
+  drink = selection(&counter, &aLastState, &aState, &positionX, &positionY, &globalState);
+  Serial.print("wassup");
+  
+  //Serial.print( selection(&counter, &aLastState, &aState, &positionX, &positionY, &globalState));
+
+
   //client = /*Vérifier bouton ClientAssigner()*/;
   //if (client != '0');
   //{
   //  EnfileClient(*GestionClient, client);
   //}
-
-
 
 }
