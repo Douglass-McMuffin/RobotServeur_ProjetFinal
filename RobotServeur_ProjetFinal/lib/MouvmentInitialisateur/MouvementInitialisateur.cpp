@@ -1,5 +1,6 @@
 #include <MouvementInitialisateur.h>
 #include <Arduino.h>
+#include "turnRound.h"
 
 
 
@@ -58,12 +59,12 @@ void InitialiserVariableMouvement (float *p_vitesse, float *p_vGauche, float *p_
 {
     // ICI ON PEUT DÉTERMINER LES VALEURS POUR LES VARIABLES
     // On ne peut assigner de valeurs à l'extérieur de fonction
-    *p_vitesse = 0.5;
+    *p_vitesse = 0.25;
     *p_vGauche = *p_vitesse;
     *p_vDroite = *p_vitesse;
     *p_intersectionActuelle = '0';
     *p_intersectionDebut = *p_intersectionActuelle;
-    *p_intersectionFin = '\0';
+    *p_intersectionFin = '2';
     *p_arret = true;
     //GestionClient -> debut = 0;
     //GestionClient -> fin = 0;
@@ -92,7 +93,10 @@ void MouvementGlobal(struct Direction *p_infoDirection, char *p_chemin, float *p
                 char action[3] = {p_chemin[index - 1], p_chemin[index], p_chemin[index + 1]};
                 int direction = Direction(p_infoDirection, action); // LEFT = 0, STRAIGH = 1, DROITE = 2
 
-                // ICI, il faut tourner avec la bonne direction (Partie Hardcoder)
+                deplacement_intersection(direction);
+                MOTOR_SetSpeed(0,*p_vitesse);
+                MOTOR_SetSpeed(1,*p_vitesse);
+                delay(100);
 
                 intersection_suivant(p_chemin, p_intersectionActuelle);
             }
@@ -118,10 +122,11 @@ void MouvementGlobal(struct Direction *p_infoDirection, char *p_chemin, float *p
         *p_intersectionDebut = p_chemin[0];
         intersection_suivant(p_chemin, p_intersectionActuelle);
 
-        // ICI, on doit faire 180 degrée pour pointer dans la bonne direction
+        deplacement_intersection(LEFT);
+        deplacement_intersection(LEFT);
 
         *p_arret = false;
 
     }
     
-}
+} 

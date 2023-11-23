@@ -36,7 +36,7 @@ struct Direction infoDirection[NOMBRE_DE_DIRECTION];
 
 
 void setup() {
-  //BoardInit();
+  BoardInit();
   InitialiserVariableMouvement(&vitesse, &vGauche, &vDroite, infoDirection, &intersection_actuelle, &intersectionDebut, &intersectionFin, &arret);
 }
 

@@ -106,6 +106,8 @@ void deplacement_intersection(int action)
 
     if (action == STRAIGHT){
         Serial.print("staight");
+        MOTOR_SetSpeed(0,0.25);
+        MOTOR_SetSpeed(1,0.25);
         delay(400); 
     }
 
@@ -116,3 +118,4 @@ void deplacement_intersection(int action)
     }
     
 }
+
