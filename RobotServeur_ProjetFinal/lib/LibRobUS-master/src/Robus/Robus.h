@@ -9,7 +9,7 @@ Class to interface Robus board functionnalities
 #define Robus_H_
 
 #include <Arduino.h>
-#include <MegaServo/MegaServo.h>
+//#include <MegaServo/MegaServo.h>
 //#include <Servo.h>
 #include <LS7366Counter/LS7366Counter.h>
 #include <SRF04Sonar/SRF04Sonar.h>
@@ -91,7 +91,7 @@ class Robus
     const uint8_t __SONAR_ECHO_PINS__[2] = {22, 24};
     const uint8_t __SONAR_TRIG_PINS__[2] = {23, 25};
     //Servo __servo__[2];
-    MegaServo __servo__[2];
+    //MegaServo __servo__[2];
     SRF04Sonar __sonar__[2];
 };
 #endif //Robus_H_

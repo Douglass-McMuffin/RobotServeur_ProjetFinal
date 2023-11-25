@@ -14,13 +14,13 @@ Class to interface some of the ArduinoX "on board" functionnalities
   AudioPlayer __audio__;
   DisplayLCD __display__;
   VexQuadEncoder __vex__;
-  IRrecv __irrecv__(IR_RECV_PIN);
+  //IRrecv __irrecv__(IR_RECV_PIN);
 
 // Global variables
   // Bluetooth
   void (*BT_func)() = NULL;
   String BlUETOOTH_MSG = "";
-  decode_results IR_MSG;
+  //decode_results IR_MSG;
 
 
 void BoardInit(){
@@ -34,7 +34,7 @@ void BoardInit(){
   __Robus__.init();
 
   // init telecommande
-  __irrecv__.enableIRIn(); // Start the receiver
+  //__irrecv__.enableIRIn(); // Start the receiver
 };
 
 void AudioInit(){
@@ -255,10 +255,12 @@ String BLUETOOTH_read(){
 }
 
 uint32_t REMOTE_read(){
+  /*
   if (__irrecv__.decode(&IR_MSG)) {
     __irrecv__.resume(); // Receive the next value
     // Serial.println(IR_MSG.value);
     return IR_MSG.value;
   }
+  */
   return 0;
 };

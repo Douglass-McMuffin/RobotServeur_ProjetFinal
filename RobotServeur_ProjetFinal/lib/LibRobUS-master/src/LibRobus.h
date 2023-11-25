@@ -17,7 +17,7 @@ General librairies for Robus robot
 #include <SoftTimer/SoftTimer.h>
 
 // Third party libraries
-#include <IRremote/IRremote.h>
+//#include <IRremote/IRremote.h>
 
 
 // Defines

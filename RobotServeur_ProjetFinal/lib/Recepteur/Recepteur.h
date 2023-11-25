@@ -3,8 +3,7 @@
 
 
 #include <Arduino.h>
-#include <RH_ASK.h>
-#include <SPI.h>
+
 
 int ClientAssigner();
 
