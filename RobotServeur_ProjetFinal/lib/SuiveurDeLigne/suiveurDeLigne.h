@@ -11,8 +11,8 @@
 #define PIN_LUMIERE_CENTRE A11
 #define PIN_LUMIERE_DROITE A10
 
-#define NOMBRE_DE_SOMMET 16
-#define NOMBRE_DE_DIRECTION 40
+#define NOMBRE_DE_SOMMET 10
+#define NOMBRE_DE_DIRECTION 30
 
 struct Sommet {
     char nom; // Identifiant

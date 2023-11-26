@@ -114,6 +114,7 @@ void deplacement_intersection(int action)
     if (action == DROITE){
         turnRight((2*turn45),0.20);
         Serial.print("turnright");
+        
 
     }
     

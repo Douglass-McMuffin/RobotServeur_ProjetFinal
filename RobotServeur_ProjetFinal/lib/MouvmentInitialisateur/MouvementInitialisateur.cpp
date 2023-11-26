@@ -7,50 +7,37 @@
 void InitialiserDirection (struct Direction infoDirection[NOMBRE_DE_DIRECTION])
 {
     infoDirection[0] = {{'C','B','A'}, STRAIGHT};
-    infoDirection[1] = {{'B','A','O'}, STRAIGHT};
-    infoDirection[2] = {{'A','O','D'}, STRAIGHT};
-    infoDirection[3] = {{'O','D','E'}, STRAIGHT};
-    infoDirection[4] = {{'D','E','F'}, STRAIGHT};
-    infoDirection[5] = {{'E','F','G'}, STRAIGHT};
+    infoDirection[1] = {{'B','A','0'}, STRAIGHT};
+    infoDirection[2] = {{'0','A','B'}, STRAIGHT};
+    infoDirection[3] = {{'A','B','C'}, STRAIGHT};
+    infoDirection[4] = {{'1','A','4'}, STRAIGHT};
+    infoDirection[5] = {{'4','A','1'}, STRAIGHT};
+    infoDirection[6] = {{'2','B','5'}, STRAIGHT};
+    infoDirection[7] = {{'5','B','2'}, STRAIGHT};
+    infoDirection[8] = {{'3','C','6'}, STRAIGHT};
+    infoDirection[9] = {{'6','C','3'}, STRAIGHT};
 
-    infoDirection[6] = {{'A','B','C'}, STRAIGHT};
-    infoDirection[7] = {{'O','A','B'}, STRAIGHT};
-    infoDirection[8] = {{'D','O','A'}, STRAIGHT};
-    infoDirection[9] = {{'E','D','O'}, STRAIGHT};
-    infoDirection[10] = {{'F','E','D'}, STRAIGHT};
-    infoDirection[11] = {{'G','F','E'}, STRAIGHT};
+    infoDirection[10] = {{'3','C','B'}, DROITE};
+    infoDirection[11] = {{'C','B','2'}, DROITE};
+    infoDirection[12] = {{'2','B','A'}, DROITE};
+    infoDirection[13] = {{'B','A','1'}, DROITE};
+    infoDirection[14] = {{'1','A','0'}, DROITE};
+    infoDirection[15] = {{'0','A','4'}, DROITE};
+    infoDirection[16] = {{'4','A','B'}, DROITE};
+    infoDirection[17] = {{'A','B','5'}, DROITE};
+    infoDirection[18] = {{'5','B','C'}, DROITE};
+    infoDirection[19] = {{'B','C','6'}, DROITE};
 
-    infoDirection[12] = {{'3','C','B'}, DROITE};
-    infoDirection[13] = {{'2','B','A'}, DROITE};
-    infoDirection[14] = {{'1','A','O'}, DROITE};
-    infoDirection[15] = {{'0','O','A'}, DROITE};
-    infoDirection[16] = {{'4','D','E'}, DROITE};
-    infoDirection[17] = {{'5','E','F'}, DROITE};
-    infoDirection[18] = {{'6','F','G'}, DROITE};
-
-    infoDirection[19] = {{'C','B','2'}, DROITE};
-    infoDirection[20] = {{'B','A','1'}, DROITE};
-    infoDirection[21] = {{'O','D','4'}, DROITE};
-    infoDirection[22] = {{'D','O','0'}, DROITE};
-    infoDirection[23] = {{'D','E','5'}, DROITE};
-    infoDirection[24] = {{'E','F','6'}, DROITE};
-    infoDirection[25] = {{'F','G','7'}, DROITE};
-
-    infoDirection[26] = {{'B','C','3'}, LEFT};
+    infoDirection[20] = {{'6','C','B'}, LEFT};
+    infoDirection[21] = {{'C','B','5'}, LEFT};
+    infoDirection[22] = {{'5','B','A'}, LEFT};
+    infoDirection[23] = {{'B','A','4'}, LEFT};
+    infoDirection[24] = {{'4','A','0'}, LEFT};
+    infoDirection[25] = {{'0','A','1'}, LEFT};
+    infoDirection[26] = {{'1','A','B'}, LEFT};
     infoDirection[27] = {{'A','B','2'}, LEFT};
-    infoDirection[28] = {{'O','A','1'}, LEFT};
-    infoDirection[29] = {{'0','O','D'}, LEFT};
-    infoDirection[30] = {{'E','D','4'}, LEFT};
-    infoDirection[31] = {{'F','E','5'}, LEFT};
-    infoDirection[32] = {{'G','F','6'}, LEFT};
-
-    infoDirection[33] = {{'2','B','C'}, LEFT};
-    infoDirection[34] = {{'1','A','B'}, LEFT};
-    infoDirection[35] = {{'A','O','0'}, LEFT};
-    infoDirection[36] = {{'4','D','O'}, LEFT};
-    infoDirection[37] = {{'5','E','D'}, LEFT};
-    infoDirection[38] = {{'6','F','E'}, LEFT};
-    infoDirection[39] = {{'7','G','F'}, LEFT};
+    infoDirection[28] = {{'2','B','C'}, LEFT};
+    infoDirection[29] = {{'B','C','3'}, LEFT};
 }
 
 
@@ -64,7 +51,7 @@ void InitialiserVariableMouvement (float *p_vitesse, float *p_vGauche, float *p_
     *p_vDroite = *p_vitesse;
     *p_intersectionActuelle = '0';
     *p_intersectionDebut = *p_intersectionActuelle;
-    *p_intersectionFin = '2';
+    *p_intersectionFin = '0';
     *p_arret = true;
     //GestionClient -> debut = 0;
     //GestionClient -> fin = 0;
@@ -96,7 +83,7 @@ void MouvementGlobal(struct Direction *p_infoDirection, char *p_chemin, float *p
                 deplacement_intersection(direction);
                 MOTOR_SetSpeed(0,*p_vitesse);
                 MOTOR_SetSpeed(1,*p_vitesse);
-                delay(100);
+                delay(500);
 
                 intersection_suivant(p_chemin, p_intersectionActuelle);
             }
