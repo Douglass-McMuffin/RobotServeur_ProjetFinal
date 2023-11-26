@@ -2,45 +2,70 @@
 #include <LibRobus.h>
 //#include "commande_direction.h"
 #include "MouvementInitialisateur.h"
+#include "drinkSelection.h"
 
-//chemin //definir structure
-//variables pour fonction indication_direction
 
-// Il faut un code pour le déplacement avec le suiveur de ligne
-/*
 
-Dans Alignement : 
-Une fonction qui regarder les trois capteurs sont sur du noir.
-    Cette fonction
+char intersection;
+char trajet[10];
+char intersection_actuelle;
 
-ALOHA
-POUR LE MOUVEMENT DU DÉPART AU CLIENT
+//variables pour fonction lireLumiere
+bool luxGauche; 
+bool luxCentre;
+bool luxDroite;
 
-On suppose qu'on sait c'est quel client (le deuxième)
-On suppose qu'on sait qu'on est au départ
+//variables pour fonction ControleMoteurLigne
+float vGauche;
+float vDroite;
+float vitesse;
+//vitesse desire lors des deplacements
 
-Tant qu'il n'est pas au client
+char intersectionDebut;
+char intersectionFin;
 
-*/
+//char client;
 
+bool arret; // est vrai si le robot ne bouge pas
+
+char intersectionActuelle;
+
+// variables prise de commande(choix)
+int counter = 1000001, aLastState, aState, positionX, positionY, globalState = 0;
+int drink;
+
+
+
+char chemin[NOMBRE_DE_SOMMET];
+struct Direction infoDirection[NOMBRE_DE_DIRECTION];
 
 
 void setup() {
   BoardInit();
-  Serial.begin(9600); 
+  pinMode (outputA,INPUT);
+  pinMode (outputB,INPUT);
+  pinMode (inputSW, INPUT_PULLUP);
+  aLastState = digitalRead(outputA); 
+
+  DISPLAY_Clear();
+  menuInit(counter,&positionX,&positionY);
+ //InitialiserVariableMouvement(&vitesse, &vGauche, &vDroite, infoDirection, &intersection_actuelle, &intersectionDebut, &intersectionFin, &arret);
 }
+
 
 bool flag = true;
 void loop() {
+  //MouvementGlobal(infoDirection, chemin, &vitesse, &vGauche, &vDroite, &luxGauche, &luxCentre, &luxDroite, &intersection_actuelle, &intersectionDebut, &intersectionFin, &arret);
+  drink = selection(&counter, &aLastState, &aState, &positionX, &positionY, &globalState);
+  Serial.print("wassup");
+  
+  //Serial.print( selection(&counter, &aLastState, &aState, &positionX, &positionY, &globalState));
 
 
-  if (flag)
-  {
-    InitialiserDirection(infoDirection);
-    Chemin(graphe, '3', '7', chemin);
-    Serial.println();
-    Serial.println(chemin);
-    flag = false;
-  }
+  //client = /*Vérifier bouton ClientAssigner()*/;
+  //if (client != '0');
+  //{
+  //  EnfileClient(*GestionClient, client);
+  //}
+
 }
-

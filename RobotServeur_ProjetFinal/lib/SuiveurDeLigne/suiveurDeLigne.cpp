@@ -1,53 +1,73 @@
 #include "suiveurDeLigne.h"
-#include <arduino.h>
+
+// La fonction devra modifier la vitesse des roues selon les capteurs
+
+//À mettre dans le fichier .h (en bas)
+/* float vGauche, vDroite;
+float *p_vGauche, *p_vDroite;
+p_vGauche = &vGauche;
+p_vDroite = &vDroite; 
+int eGauche, eDroite; */
 
 // Inscrit les valeurs des capteurs dans les bools.
 // La fonction prend 3 pointeurs pour les 3 capteurs.
 // La fonction ne retourne rien. Les variables deviennent soit 0 pour quand il voit du noir et 1 pour quand il voit du blanc
-void LireLumiere (int *p_luxGauche, int *p_luxCentre, int *p_luxDroite)
+void LireLumiere (bool *p_luxGauche, bool *p_luxCentre, bool *p_luxDroite)
 {
-    if (analogRead(PIN_LUMIERE_GAUCHE) < 512)
-        *p_luxGauche = 1;
-    else
-        *p_luxGauche = 0;
-    if (analogRead(PIN_LUMIERE_CENTRE) < 512)
-        *p_luxCentre = 1;
-    else
-        *p_luxCentre = 0;
-    if (analogRead(PIN_LUMIERE_DROITE) < 512)
-        *p_luxDroite = 1;
-    else
-        *p_luxDroite = 0;
-    return;
+    *p_luxGauche = analogRead(PIN_LUMIERE_GAUCHE) < 256;
+    *p_luxCentre = analogRead(PIN_LUMIERE_CENTRE) < 300;
+    *p_luxDroite = analogRead(PIN_LUMIERE_DROITE) < 256;
+    //Serial.print(*p_luxDroite);
+    //Serial.print(analogRead(PIN_LUMIERE_DROITE));
+    //Serial.print("\n");
 }
 
-// Permet de modifier la vitesse des moteurs selon la situation
-void ControleMoteurLigne (float vitesse, float *p_vGauche, float *p_vDroite, int luxGauche, int luxCentre, int luxDroite)
+void ControleMoteurLigne (float vitesse, float *p_vGauche, float *p_vDroite, bool luxGauche, bool luxCentre, bool luxDroite)
 {
     // Si le robot est sur la ligne noir (centre activé)
-    if (luxGauche)
+   
+    if (!luxCentre)
     {
-        if(!luxCentre)
+        //*p_vGauche = vitesse;
+        //*p_vDroite = vitesse;
+        if(luxGauche && luxDroite)
+        {
+            *p_vGauche = vitesse;
+            *p_vDroite = vitesse;
+        }
+        else if (!luxGauche)
         {
             *p_vGauche = -vitesse/2;
             *p_vDroite = vitesse;
         }
-    }
-    if (luxCentre)
-    {
-        if(!luxGauche && !luxDroite)
-        {
-            *p_vGauche = vitesse;
-            *p_vDroite = vitesse;
-        }
-    }
-    if (luxDroite)
-    {
-        if(!luxCentre)
+        else 
         {
             *p_vGauche = vitesse;
             *p_vDroite = -vitesse/2;
         }
+    }
+
+
+    else if (!luxGauche)
+    {
+        *p_vGauche = -vitesse/2;
+        *p_vDroite = vitesse;
+       /*if(luxCentre)
+        {
+            *p_vGauche = -vitesse/2;
+            *p_vDroite = vitesse;
+        }*/
+    }
+   
+    else if (!luxDroite)
+    {
+        *p_vGauche = vitesse;
+        *p_vDroite = -vitesse/2;
+        /*if(luxCentre)
+        {
+            *p_vGauche = vitesse;
+            *p_vDroite = -vitesse/2;
+        }*/
     }
 }
 
@@ -135,13 +155,14 @@ void InitialiserGraphe (struct Sommet graphe[NOMBRE_DE_SOMMET])
 
 
 //Permet de trouver le chemin entre deux points
-void Chemin (struct Sommet graphe[NOMBRE_DE_SOMMET], char debut, char fin, char *chemin)
+void Chemin (char debut, char fin, char *chemin)
 {
     struct File file;
     file.debut = 0; file.fin = 0;
     struct Sommet *premierSommet;
     struct Sommet *voisin;
     struct Sommet sommetActuel;
+    struct Sommet graphe[NOMBRE_DE_SOMMET];
     InitialiserGraphe(graphe);
     premierSommet = AppelPointeur(graphe, debut);
     premierSommet -> marque = 1;
@@ -188,7 +209,7 @@ void Chemin (struct Sommet graphe[NOMBRE_DE_SOMMET], char debut, char fin, char 
     }
 }
 
-int Direction (struct Direction infoDirection[], char chemin[4])
+int Direction (struct Direction infoDirection[], char chemin[3])
 {
     int i = 0;
     while ((infoDirection[i].nom[0] != chemin[0] || infoDirection[i].nom[1] != chemin[1] || infoDirection[i].nom[2] != chemin[2]) && i < NOMBRE_DE_DIRECTION)
@@ -204,6 +225,14 @@ int Direction (struct Direction infoDirection[], char chemin[4])
         return -1;
     }
 }
+
+int IndexChemin (char *chemin, char intersection)
+{
+    int i = 0;
+    for (;chemin[i] != intersection;i++);
+    return i;
+}
+
 
 
 
