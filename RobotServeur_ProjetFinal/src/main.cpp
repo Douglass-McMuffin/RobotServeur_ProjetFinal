@@ -38,7 +38,7 @@ char intersectionActuelle;
 // variables prise de commande(choix)
 int counter = 1000001, aLastState, aState, positionX, positionY, globalState = 0;
 char drink;
-char client = 0;
+char client;
 int condition = 0;
 
 
@@ -73,9 +73,11 @@ void loop() {
   {
     if (48 + 1 <= intersectionActuelle && intersectionActuelle <= 48 + 3)
     {
+    //On est devant un client
       client = DefileClient(&fileCirculaire);
       if (!aCanette)
       {
+        //On n'a pas de cannette avec nous
         drink = selection(&counter, &aLastState, &aState, &positionX, &positionY, &globalState) + 48;
         if (drink != '7')
         {
@@ -92,6 +94,7 @@ void loop() {
       }
     } else if (48 + 4 <= intersectionActuelle && intersectionActuelle <= 48 + 6)
     {
+      //On est devant un drink
       drink = DefileClient(&fileCirculaire);
       //Il faut prendre le drink
       //set_stepper_dir(PULL_CAN);
@@ -102,16 +105,4 @@ void loop() {
     }
     intersectionFin = LireClient(fileCirculaire);
   }
-  Serial.println(client);
-
-  
-  //Serial.print( selection(&counter, &aLastState, &aState, &positionX, &positionY, &globalState));
-
-
-  //client = /*Vérifier bouton ClientAssigner()*/;
-  //if (client != '0');
-  //{
-  //  EnfileClient(*GestionClient, client);
-  //}
-
 }
