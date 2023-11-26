@@ -42,7 +42,7 @@ void InitialiserDirection (struct Direction infoDirection[NOMBRE_DE_DIRECTION])
 
 
 
-void InitialiserVariableMouvement (float *p_vitesse, float *p_vGauche, float *p_vDroite, struct Direction p_infoDirection[NOMBRE_DE_DIRECTION], char *p_intersectionActuelle, char *p_intersectionDebut, char *p_intersectionFin, bool *p_arret)
+void InitialiserVariableMouvement (float *p_vitesse, float *p_vGauche, float *p_vDroite, struct Direction p_infoDirection[NOMBRE_DE_DIRECTION], char *p_intersectionActuelle, char *p_intersectionDebut, char *p_intersectionFin, struct FileGestion *p_fileCirculaire, bool *p_arret)
 {
     // ICI ON PEUT DÉTERMINER LES VALEURS POUR LES VARIABLES
     // On ne peut assigner de valeurs à l'extérieur de fonction
@@ -53,6 +53,9 @@ void InitialiserVariableMouvement (float *p_vitesse, float *p_vGauche, float *p_
     *p_intersectionDebut = *p_intersectionActuelle;
     *p_intersectionFin = '0';
     *p_arret = true;
+
+    p_fileCirculaire -> debut = 0;
+    p_fileCirculaire -> fin = 0;
     //GestionClient -> debut = 0;
     //GestionClient -> fin = 0;
     //for (int i = 0; i < NOMBRE_DE_BOUTON; i++)

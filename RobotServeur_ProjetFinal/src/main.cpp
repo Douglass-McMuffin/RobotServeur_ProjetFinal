@@ -3,7 +3,6 @@
 
 #include <Arduino.h>
 #include <LibRobus.h>
-//#include "commande_direction.h"
 #include "MouvementInitialisateur.h"
 #include "drinkSelection.h"
 #include "Recepteur.h"
@@ -32,18 +31,20 @@ char intersectionFin;
 //char client;
 
 bool arret; // est vrai si le robot ne bouge pas
+bool aCanette = false;
 
 char intersectionActuelle;
 
 // variables prise de commande(choix)
 int counter = 1000001, aLastState, aState, positionX, positionY, globalState = 0;
-int drink;
-int client = 0;
+char drink;
+char client = 0;
 int condition = 0;
 
 
 char chemin[NOMBRE_DE_SOMMET];
 struct Direction infoDirection[NOMBRE_DE_DIRECTION];
+struct FileGestion fileCirculaire;
 
 
 void setup() {
@@ -55,7 +56,7 @@ void setup() {
 
   DISPLAY_Clear();
   menuInit(counter,&positionX,&positionY);
-  InitialiserVariableMouvement(&vitesse, &vGauche, &vDroite, infoDirection, &intersection_actuelle, &intersectionDebut, &intersectionFin, &arret);
+  InitialiserVariableMouvement(&vitesse, &vGauche, &vDroite, infoDirection, &intersection_actuelle, &intersectionDebut, &intersectionFin, &fileCirculaire, &arret);
 }
 
 
@@ -65,66 +66,41 @@ void loop() {
   //set_stepper_dir(PUSH_CAN);
   MouvementGlobal(infoDirection, chemin, &vitesse, &vGauche, &vDroite, &luxGauche, &luxCentre, &luxDroite, &intersection_actuelle, &intersectionDebut, &intersectionFin, &arret);
   //drink = selection(&counter, &aLastState, &aState, &positionX, &positionY, &globalState);
-  if (client == 0)
+  
+  client = ClientAssigner() + 48;
+  EnfileClient(&fileCirculaire, client, false);
+  if (arret)
   {
-  //client = ClientAssigner();
-  // Au pire 
-  client = 2;
-  }
-  if (client != 0)
-  {
-    // Code pour 1 client à la fois
-    if (condition == 0)
+    if (48 + 1 <= intersectionActuelle && intersectionActuelle <= 48 + 3)
     {
-      intersectionFin = client + 48;
-      condition++;
-    } else if (condition == 1)
-    {
-      if (arret)
-        condition++;
-    } else if (condition == 2)
-    {
-      //On est devant le client pour prendre la commande
-      //drink = selection(&counter, &aLastState, &aState, &positionX, &positionY, &globalState);
-      drink = 6;
-      if (drink != 7)
+      client = DefileClient(&fileCirculaire);
+      if (!aCanette)
       {
-        intersectionFin = drink + 48;
-        condition++;
+        drink = selection(&counter, &aLastState, &aState, &positionX, &positionY, &globalState) + 48;
+        if (drink != '7')
+        {
+          EnfileClient(&fileCirculaire, drink, true);
+          EnfileClient(&fileCirculaire, client, true);
+        }
       } else {
-        intersectionFin = '0';
-        condition = 0;
-        client = 0;
+        //On est devant le client avec la cannette
+        //set_stepper_dir(PUSH_CAN);
+        //activate_stepper(100);
+        delay(1000);
+        //deactivate_stepper();
+        aCanette = false;
       }
-    } else if (condition == 3)
+    } else if (48 + 4 <= intersectionActuelle && intersectionActuelle <= 48 + 6)
     {
-      if (arret)
-        condition++;
-    } else if (condition == 4)
-    {
+      drink = DefileClient(&fileCirculaire);
       //Il faut prendre le drink
       //set_stepper_dir(PULL_CAN);
       //activate_stepper(100);
       delay(1000);
       //deactivate_stepper();
-      intersectionFin = client + 48;
-      condition++;
-    } else if (condition == 5)
-    {
-      if (arret)
-        condition++;
-    } else if (condition == 6)
-    {
-      //On est devant le client avec la cannette
-      //set_stepper_dir(PUSH_CAN);
-      //activate_stepper(100);
-      delay(1000);
-      //deactivate_stepper();
-      intersectionFin = '0';
-      client = 0;
-      condition = 0;
+      aCanette = true;
     }
-
+    intersectionFin = LireClient(fileCirculaire);
   }
   Serial.println(client);
 
