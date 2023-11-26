@@ -121,7 +121,7 @@ struct Sommet *AppelPointeur (struct Sommet *graphe, char nom)
 
 void InitialiserGraphe (struct Sommet graphe[NOMBRE_DE_SOMMET])
 {
-    char sommets[] = "OABCDEFG01234567;O : AD0;A : OB1;B : AC2;C : B3;D : OE4;E : DF5;F : EG6;G : F7;0 : O;1 : A;2 : B;3 : C;4 : D;5 : E;6 : F;7 : G;\0";
+    char sommets[] = "0123456ABC;0 : A;1 : A;2 : B;3 : C;4 : A;5 : B;6 : C;A : 014B;B : 25AC;C : 36B;\0";
     int i = 0;
     Serial.println("JE VAIS RÉINITIALISER LE GRAPHE");
     int nombre_voisin;

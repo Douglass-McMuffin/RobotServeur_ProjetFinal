@@ -1,10 +1,10 @@
 #ifndef GestionBouton
 #define GestionBouton
 
-#define NOMBRE_DE_BOUTON 10
+#define NOMBRE_DE_PLACE 10
 
 struct FileGestion {
-    char client[NOMBRE_DE_BOUTON];
+    char client[NOMBRE_DE_PLACE];
     int debut;
     int fin;
 } GestionClient;
