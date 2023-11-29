@@ -7,7 +7,7 @@ struct FileGestion {
     char client[NOMBRE_DE_PLACE];
     int debut;
     int fin;
-} GestionClient;
+};
 
 int DedansClient (struct FileGestion file, char client);
 void EnfileClient (struct FileGestion *file, char client, bool revient);

@@ -8,6 +8,7 @@ float *p_vGauche, *p_vDroite;
 p_vGauche = &vGauche;
 p_vDroite = &vDroite; 
 int eGauche, eDroite; */
+#define DIV_VITESSE 2.5
 
 // Inscrit les valeurs des capteurs dans les bools.
 // La fonction prend 3 pointeurs pour les 3 capteurs.
@@ -37,20 +38,20 @@ void ControleMoteurLigne (float vitesse, float *p_vGauche, float *p_vDroite, boo
         }
         else if (!luxGauche)
         {
-            *p_vGauche = -vitesse/2;
+            *p_vGauche = -vitesse/DIV_VITESSE;
             *p_vDroite = vitesse;
         }
         else 
         {
             *p_vGauche = vitesse;
-            *p_vDroite = -vitesse/2;
+            *p_vDroite = -vitesse/DIV_VITESSE;
         }
     }
 
 
     else if (!luxGauche)
     {
-        *p_vGauche = -vitesse/2;
+        *p_vGauche = -vitesse/DIV_VITESSE;
         *p_vDroite = vitesse;
        /*if(luxCentre)
         {
@@ -62,7 +63,7 @@ void ControleMoteurLigne (float vitesse, float *p_vGauche, float *p_vDroite, boo
     else if (!luxDroite)
     {
         *p_vGauche = vitesse;
-        *p_vDroite = -vitesse/2;
+        *p_vDroite = -vitesse/DIV_VITESSE;
         /*if(luxCentre)
         {
             *p_vGauche = vitesse;

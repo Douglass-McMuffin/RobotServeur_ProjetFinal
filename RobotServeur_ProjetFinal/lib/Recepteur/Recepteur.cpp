@@ -3,13 +3,12 @@
 #include <SPI.h>
 
 
-int ClientAssigner () 
+uint16_t data;
+int ClientAssigner (RH_ASK *p_driver) 
 {
-    RH_ASK driver;
-    uint16_t data;
     uint8_t datalen = sizeof(data);
-    if (driver.recv((uint8_t*)&data, &datalen) && datalen == sizeof(data)) {
-        Serial.println(data);
+    if ((*p_driver).recv((uint8_t*)&data, &datalen) && datalen == sizeof(data)) {
+        //Serial.println(data);
         return data;
   }
 }

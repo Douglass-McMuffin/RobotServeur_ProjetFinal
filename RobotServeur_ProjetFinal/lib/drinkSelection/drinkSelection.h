@@ -5,9 +5,9 @@
 #define SEVENUP 5 //Vert
 #define PEPSI 6 //Bleu
 
-#define outputA 37
-#define outputB 38
-#define inputSW 39
+#define outputA 38
+#define outputB 39
+#define inputSW 40
 
 #define totalColumns 16 //Columns on the LCD screen
 #define totalRows 2 //Rows on the LCD screen

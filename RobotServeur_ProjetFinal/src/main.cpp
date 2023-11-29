@@ -1,4 +1,4 @@
-#include <RH_RF69.h>
+#include <RH_ASK.h>
 #include <SPI.h>
 
 #include <Arduino.h>
@@ -7,7 +7,9 @@
 #include "drinkSelection.h"
 #include "Recepteur.h"
 #include "servo_driver.h"
+#include "GestionBouton.h"
 
+RH_ASK driver;
 
 
 char intersection;
@@ -41,7 +43,6 @@ char drink;
 char client;
 int condition = 0;
 
-
 char chemin[NOMBRE_DE_SOMMET];
 struct Direction infoDirection[NOMBRE_DE_DIRECTION];
 struct FileGestion fileCirculaire;
@@ -53,7 +54,10 @@ void setup() {
   pinMode (outputB,INPUT);
   pinMode (inputSW, INPUT_PULLUP);
   aLastState = digitalRead(outputA); 
-
+  
+  if (!driver.init())
+    Serial.println("Init failed");
+  deactivate_stepper();
   DISPLAY_Clear();
   menuInit(counter,&positionX,&positionY);
   InitialiserVariableMouvement(&vitesse, &vGauche, &vDroite, infoDirection, &intersection_actuelle, &intersectionDebut, &intersectionFin, &fileCirculaire, &arret);
@@ -61,14 +65,12 @@ void setup() {
 
 
 void loop() {
-  //activate_stepper(100);
-  //deactivate_stepper();
-  //set_stepper_dir(PUSH_CAN);
   MouvementGlobal(infoDirection, chemin, &vitesse, &vGauche, &vDroite, &luxGauche, &luxCentre, &luxDroite, &intersection_actuelle, &intersectionDebut, &intersectionFin, &arret);
-  //drink = selection(&counter, &aLastState, &aState, &positionX, &positionY, &globalState);
   
-  client = ClientAssigner() + 48;
-  EnfileClient(&fileCirculaire, client, false);
+  
+  client = ClientAssigner(&driver) + 48;
+  if (48 + 1 <= client && client <= 48 + 3)
+    EnfileClient(&fileCirculaire, client, false);
   if (arret)
   {
     if (48 + 1 <= intersectionActuelle && intersectionActuelle <= 48 + 3)
@@ -105,4 +107,15 @@ void loop() {
     }
     intersectionFin = LireClient(fileCirculaire);
   }
+  //Serial.println(client);
+  /*Serial.print(analogRead(PIN_LUMIERE_GAUCHE));
+  Serial.print(", ");
+  Serial.print(analogRead(PIN_LUMIERE_CENTRE));
+  Serial.print(", ");
+  Serial.println(analogRead(PIN_LUMIERE_DROITE));*/
+  //Serial.print(luxGauche);
+  //Serial.print(", ");
+  //Serial.print(luxCentre);
+  //Serial.print(", ");
+  //Serial.println(luxDroite);
 }

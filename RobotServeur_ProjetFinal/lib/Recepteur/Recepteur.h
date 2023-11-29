@@ -3,9 +3,10 @@
 
 
 #include <Arduino.h>
+#include <RH_ASK.h>
 
 
-int ClientAssigner();
+int ClientAssigner(RH_ASK *p_driver);
 
 
 #endif

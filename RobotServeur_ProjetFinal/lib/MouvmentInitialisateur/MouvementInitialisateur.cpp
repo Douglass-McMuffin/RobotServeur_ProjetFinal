@@ -86,7 +86,7 @@ void MouvementGlobal(struct Direction *p_infoDirection, char *p_chemin, float *p
                 deplacement_intersection(direction);
                 MOTOR_SetSpeed(0,*p_vitesse);
                 MOTOR_SetSpeed(1,*p_vitesse);
-                delay(500);
+                delay(200);
 
                 intersection_suivant(p_chemin, p_intersectionActuelle);
             }
@@ -111,7 +111,7 @@ void MouvementGlobal(struct Direction *p_infoDirection, char *p_chemin, float *p
         Chemin(*p_intersectionActuelle, *p_intersectionFin, p_chemin);
         *p_intersectionDebut = p_chemin[0];
         intersection_suivant(p_chemin, p_intersectionActuelle);
-
+        Serial.println(p_chemin);
         deplacement_intersection(LEFT);
         deplacement_intersection(LEFT);
 
