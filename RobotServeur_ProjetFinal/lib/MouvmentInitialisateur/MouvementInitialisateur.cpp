@@ -70,10 +70,10 @@ void InitialiserVariableMouvement (float *p_vitesse, float *p_vGauche, float *p_
 
 void MouvementGlobal(struct Direction *p_infoDirection, char *p_chemin, float *p_vitesse, float *p_vGauche, float *p_vDroite, bool *p_luxGauche, bool *p_luxCentre, bool *p_luxDroite, char *p_intersectionActuelle, char *p_intersectionDebut, char *p_intersectionFin, bool *p_arret)
 {
-    
+    LireLumiere(p_luxGauche, p_luxCentre, p_luxDroite);
     if (!*p_arret) // S'il bouge
     {
-        LireLumiere(p_luxGauche, p_luxCentre, p_luxDroite);
+        
         if (!*p_luxCentre && !*p_luxGauche && !*p_luxDroite)
         {
             if (*p_intersectionActuelle != *p_intersectionFin)

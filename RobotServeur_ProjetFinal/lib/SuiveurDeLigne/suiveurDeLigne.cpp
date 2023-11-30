@@ -8,16 +8,16 @@ float *p_vGauche, *p_vDroite;
 p_vGauche = &vGauche;
 p_vDroite = &vDroite; 
 int eGauche, eDroite; */
-#define DIV_VITESSE 2.5
+#define DIV_VITESSE 3
 
 // Inscrit les valeurs des capteurs dans les bools.
 // La fonction prend 3 pointeurs pour les 3 capteurs.
 // La fonction ne retourne rien. Les variables deviennent soit 0 pour quand il voit du noir et 1 pour quand il voit du blanc
 void LireLumiere (bool *p_luxGauche, bool *p_luxCentre, bool *p_luxDroite)
 {
-    *p_luxGauche = analogRead(PIN_LUMIERE_GAUCHE) < 256;
-    *p_luxCentre = analogRead(PIN_LUMIERE_CENTRE) < 300;
-    *p_luxDroite = analogRead(PIN_LUMIERE_DROITE) < 256;
+    *p_luxGauche = analogRead(PIN_LUMIERE_GAUCHE) < 512;
+    *p_luxCentre = analogRead(PIN_LUMIERE_CENTRE) < 512;
+    *p_luxDroite = analogRead(PIN_LUMIERE_DROITE) < 512;
     //Serial.print(*p_luxDroite);
     //Serial.print(analogRead(PIN_LUMIERE_DROITE));
     //Serial.print("\n");

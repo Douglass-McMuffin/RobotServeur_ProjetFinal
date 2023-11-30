@@ -8,8 +8,8 @@
 #define servo_driver_h
 #include <arduino.h>
 
-#define PIN_STEP 41
-#define PIN_DIR 42
+#define PIN_STEP 44
+#define PIN_DIR 46
 typedef enum STEPPER_DIR {PUSH_CAN = 1,PULL_CAN = 0};
 
 //Intervalle:Valeur entre 10 et 250

@@ -53,11 +53,12 @@ void setup() {
   pinMode (outputA,INPUT);
   pinMode (outputB,INPUT);
   pinMode (inputSW, INPUT_PULLUP);
+  pinMode (PIN_STEP,OUTPUT);
+  pinMode (PIN_DIR, OUTPUT);
   aLastState = digitalRead(outputA); 
   
   if (!driver.init())
     Serial.println("Init failed");
-  deactivate_stepper();
   DISPLAY_Clear();
   menuInit(counter,&positionX,&positionY);
   InitialiserVariableMouvement(&vitesse, &vGauche, &vDroite, infoDirection, &intersection_actuelle, &intersectionDebut, &intersectionFin, &fileCirculaire, &arret);
@@ -80,6 +81,7 @@ void loop() {
       if (!aCanette)
       {
         //On n'a pas de cannette avec nous
+        Serial.println("Ouain Ouain");
         drink = selection(&counter, &aLastState, &aState, &positionX, &positionY, &globalState) + 48;
         if (drink != '7')
         {
@@ -88,10 +90,10 @@ void loop() {
         }
       } else {
         //On est devant le client avec la cannette
-        //set_stepper_dir(PUSH_CAN);
-        //activate_stepper(100);
+        set_stepper_dir(PUSH_CAN);
+        activate_stepper(100);
         delay(1000);
-        //deactivate_stepper();
+        deactivate_stepper();
         aCanette = false;
       }
     } else if (48 + 4 <= intersectionActuelle && intersectionActuelle <= 48 + 6)
@@ -99,23 +101,31 @@ void loop() {
       //On est devant un drink
       drink = DefileClient(&fileCirculaire);
       //Il faut prendre le drink
-      //set_stepper_dir(PULL_CAN);
-      //activate_stepper(100);
+      set_stepper_dir(PULL_CAN);
+      activate_stepper(100);
       delay(1000);
-      //deactivate_stepper();
+      deactivate_stepper();
       aCanette = true;
     }
     intersectionFin = LireClient(fileCirculaire);
   }
   //Serial.println(client);
-  /*Serial.print(analogRead(PIN_LUMIERE_GAUCHE));
+  Serial.print(analogRead(PIN_LUMIERE_GAUCHE));
   Serial.print(", ");
   Serial.print(analogRead(PIN_LUMIERE_CENTRE));
   Serial.print(", ");
-  Serial.println(analogRead(PIN_LUMIERE_DROITE));*/
-  //Serial.print(luxGauche);
-  //Serial.print(", ");
-  //Serial.print(luxCentre);
-  //Serial.print(", ");
-  //Serial.println(luxDroite);
+  Serial.println(analogRead(PIN_LUMIERE_DROITE));
+  Serial.print(luxGauche);
+  Serial.print(", ");
+  Serial.print(luxCentre);
+  Serial.print(", ");
+  Serial.println(luxDroite);
 }
+
+/*void loop () 
+{
+  drink = selection(&counter, &aLastState, &aState, &positionX, &positionY, &globalState);
+  Serial.println(drink);
+}*/
+
+
